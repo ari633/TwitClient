@@ -194,7 +194,7 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			//delete db rows
-			int rowLimit = 100;
+			int rowLimit = 50;
 			if(DatabaseUtils.queryNumEntries(timelineDB, "home")>rowLimit) {
 				String deleteQuery = "DELETE FROM home WHERE "+BaseColumns._ID+" NOT IN " +
 						"(SELECT "+BaseColumns._ID+" FROM home ORDER BY "+"update_time DESC " +
