@@ -105,7 +105,12 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 			String authURL = twitRequestToken.getAuthenticationURL();
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authURL)));
 			break;
-
+    		//user has pressed tweet button
+    		case R.id.tweetbtn:
+    			//launch tweet activity
+    		startActivity(new Intent(this, ClientTweet.class));
+    			//Log.v(LOG_TAG, "Tweet Button di pencet");
+    		break;
 		default:
 			break;
 		}
@@ -149,6 +154,11 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 		Log.v(LOG_TAG, "settings up timeline");
 		
 		setContentView(R.layout.timeline);
+		
+		//setup onclick listener for tweet button
+		LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
+		tweetClicker.setOnClickListener(this);
+	
 		
 		try {
 			//get reference to the list view

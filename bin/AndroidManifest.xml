@@ -30,7 +30,7 @@
             
         </activity>
         
-		<activity android:name=".TwitClient" ></activity> 
+		<activity android:name=".ClientTweet" ></activity> 
 		<service android:name=".TimelineService" /> 
         
     </application>
