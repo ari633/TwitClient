@@ -126,7 +126,7 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 				//get context
 				Context appCont = v.getContext();
 				//get preferences for user access
-				SharedPreferences tweetPrefs = appCont.getSharedPreferences("TwitNicePrefs", 0);
+				SharedPreferences tweetPrefs = appCont.getSharedPreferences("TwitClientPrefs", 0);
 				String userToken = tweetPrefs.getString("user_token", null);
 				String userSecret = tweetPrefs.getString("user_secret", null);
 				//create new Twitter configuration

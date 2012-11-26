@@ -24,9 +24,9 @@ import android.widget.LinearLayout;
 public class ClientTweet extends Activity implements OnClickListener {
 	
 		/**shared preferences for user twitter details*/
-	private SharedPreferences twitPrefs; 
+	private SharedPreferences tweetPrefs; 
 		/**twitter object**/
-	private Twitter twitClient; 
+	private Twitter tweetTwitter; 
 
 		/**the update ID for this tweet if it is a reply*/
 	private long tweetID = 0;
@@ -61,11 +61,11 @@ public class ClientTweet extends Activity implements OnClickListener {
 	 */
 	private void setupTweet() {
 		//get preferences for user twitter details
-		twitPrefs = getSharedPreferences("twitPrefs", 0);
+		tweetPrefs = getSharedPreferences("TwitClientPrefs", 0);
 	    
 	    	//get user token and secret for authentication
-	    String userToken = twitPrefs.getString("user_token", null);
-		String userSecret = twitPrefs.getString("user_secret", null);
+	    String userToken = tweetPrefs.getString("user_token", null);
+		String userSecret = tweetPrefs.getString("user_secret", null);
 		
 		Configuration twitConf = new ConfigurationBuilder()
 		.setOAuthConsumerKey(Const.TWIT_KEY)
@@ -74,7 +74,7 @@ public class ClientTweet extends Activity implements OnClickListener {
 		.setOAuthAccessTokenSecret(userSecret)
 		.build();
 		//instantiate new twitter
-		twitClient = new TwitterFactory(twitConf).getInstance();
+		tweetTwitter = new TwitterFactory(twitConf).getInstance();
 		
 			//get any data passed to this intent for a reply
 	    Bundle extras = getIntent().getExtras();
@@ -125,11 +125,13 @@ public class ClientTweet extends Activity implements OnClickListener {
 	    	try {
 	    		//is a reply
 	    		if(tweetName.length()>0) {
-	    			twitClient.updateStatus(new StatusUpdate(toTweet).inReplyToStatusId(tweetID));
+	    			tweetTwitter.updateStatus(new StatusUpdate(toTweet).inReplyToStatusId(tweetID));
+	    			Log.v("ClienTweet", "Melakukan Reply tweet");
 	    		}
 	    		//is a normal tweet
 	    		else {
-	    			twitClient.updateStatus(toTweet);
+	    			tweetTwitter.updateStatus(toTweet);
+	    			Log.v("ClienTweet", "Melakukan normal tweet");
 	    		}
 	    			//reset the edit text
 	    		tweetTxt.setText("");

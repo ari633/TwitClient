@@ -8,13 +8,13 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to TwitNice!"
+        android:text="Welcome"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="You need to sign into Twitter to authorize the app" />
+        android:text="" />
 
     <Button
         android:id="@+id/signin"
