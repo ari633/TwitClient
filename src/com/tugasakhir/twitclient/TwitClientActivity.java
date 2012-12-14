@@ -31,7 +31,7 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 	/**app url*/
 	public final static String TWIT_URL = "tclient-android:///"; 
 	//for error logging 
-	private String LOG_TAG = "TwitClientActivity";//alter for your Activity name 
+	private String LOG_TAG = "TwitClientActivity";//Log
 	
 	/**Twitter instance*/
 	private Twitter twitClient; 
@@ -55,7 +55,7 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 	
 	
 
-	//set the profile image display
+	//set gambar profile
 	ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;	
 	
     @Override
@@ -63,12 +63,12 @@ public class TwitClientActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         twitPrefs = getSharedPreferences("TwitClientPrefs", 0); 
         
-        //find out if the user preferences are set 
+        //mengetahui apakah preferensi pengguna ditetapkan
         if(twitPrefs.getString("user_token", null)==null) { 
         	
-        	//no user preferences so prompt to sign in 
+        	//tidak ada preferensi pengguna sehingga meminta untuk masuk 
         	setContentView(R.layout.main);
-        	//get a twitter instance for authentication
+        	//mendapatkan twitter untuk otentikasi
         	twitClient = new TwitterFactory().getInstance();
         	
         	//pass developer key and scret
@@ -77,7 +77,7 @@ public class TwitClientActivity extends Activity implements OnClickListener {
         	
             try 
             {
-            		//get authentication request token
+            		//mendapatkan token otentikasi
             	twitRequestToken = twitClient.getOAuthRequestToken(TWIT_URL);
             	
             }
@@ -87,13 +87,13 @@ public class TwitClientActivity extends Activity implements OnClickListener {
         	signIn.setOnClickListener(this);
         	
         }else{
-        	//user preferences are set - get timeline 
+        	//preferensi pengguna ditetapkan dan mendapatkan timeline
         	setupTimeline(); 
         }
         
     }
 
-    //to handle sign in tweet button press
+    //untu menghandle sign in tweet button press
 	public void onClick(View v) {
 		
 		//find view

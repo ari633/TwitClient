@@ -137,7 +137,7 @@ public class ClientTweet extends Activity implements OnClickListener {
 	    		tweetTxt.setText("");
 	    			//go back to the home timeline
 	    	}
-	    	catch(TwitterException te) { Log.e("NiceTweet", te.getMessage()); }
+	    	catch(TwitterException te) { Log.e("ClienTweet", te.getMessage()); }
 			break;
 		case R.id.homebtn:
 			//go to the home timeline, reset text first
