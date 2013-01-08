@@ -17,14 +17,26 @@ public final class R {
         public static final int control_two_opaque=0x7f040003;
     }
     public static final class drawable {
-        public static final int home=0x7f020000;
-        public static final int homebtnbg=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int profilebg=0x7f020004;
-        public static final int tweet=0x7f020005;
-        public static final int tweetbtnbg=0x7f020006;
-        public static final int updatebtnbg=0x7f020007;
+        public static final int favorite_grey=0x7f020000;
+        public static final int favorite_normal=0x7f020001;
+        public static final int home=0x7f020002;
+        public static final int home_grey=0x7f020003;
+        public static final int home_normal=0x7f020004;
+        public static final int homebtnbg=0x7f020005;
+        public static final int ic_action_search=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int ic_tab_favorite=0x7f020008;
+        public static final int ic_tab_home=0x7f020009;
+        public static final int ic_tab_interaksi=0x7f02000a;
+        public static final int ic_tab_message=0x7f02000b;
+        public static final int interaksi_normal=0x7f02000c;
+        public static final int intereksi_grey=0x7f02000d;
+        public static final int message_grey=0x7f02000e;
+        public static final int message_normal=0x7f02000f;
+        public static final int profilebg=0x7f020010;
+        public static final int tweet=0x7f020011;
+        public static final int tweetbtnbg=0x7f020012;
+        public static final int updatebtnbg=0x7f020013;
     }
     public static final class id {
         public static final int dotweet=0x7f080005;
@@ -42,10 +54,11 @@ public final class R {
         public static final int userScreen=0x7f080007;
     }
     public static final class layout {
-        public static final int main=0x7f030000;
-        public static final int timeline=0x7f030001;
-        public static final int tweet=0x7f030002;
-        public static final int update=0x7f030003;
+        public static final int loginform=0x7f030000;
+        public static final int main=0x7f030001;
+        public static final int timeline=0x7f030002;
+        public static final int tweet=0x7f030003;
+        public static final int update=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f070000;

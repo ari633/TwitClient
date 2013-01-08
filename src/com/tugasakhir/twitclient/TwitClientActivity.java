@@ -23,7 +23,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase; 
 import android.widget.ListView; 
-import android.widget.LinearLayout; 
 
 public class TwitClientActivity extends Activity implements OnClickListener {
 	
@@ -67,7 +66,7 @@ public class TwitClientActivity extends Activity implements OnClickListener {
         if(twitPrefs.getString("user_token", null)==null) { 
         	
         	//tidak ada preferensi pengguna sehingga meminta untuk masuk 
-        	setContentView(R.layout.main);
+        	setContentView(R.layout.loginform);
         	//mendapatkan twitter untuk otentikasi
         	twitClient = new TwitterFactory().getInstance();
         	
@@ -118,8 +117,8 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 	}
 	
 	/* 
-	 * onNewIntent fires when user returns from Twitter authentication Web page 
-	 */
+	 * onNewIntent fires when user returns from Twitter authentication Web page 
+	 */
 	protected void onNewIntent(Intent intent) {
 	    	
 	        super.onNewIntent(intent);
@@ -141,8 +140,8 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 		   	            .putString("user_secret", accToken.getTokenSecret())
 		   	            .commit();
 		    	        //display the timeline
-		   	        setupTimeline();
-		    	        
+		   	     startActivity(new Intent(this, Main.class));  
+		    	 // setupTimeline();     
 		   	    }
 		   	    catch (TwitterException te)
 		   	    { Log.e(LOG_TAG, "Failed to get access token: "+te.getMessage()); }
@@ -156,8 +155,8 @@ public class TwitClientActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.timeline);
 		
 		//setup onclick listener for tweet button
-		LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
-		tweetClicker.setOnClickListener(this);
+		//LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
+		//tweetClicker.setOnClickListener(this);
 	
 		
 		try {
