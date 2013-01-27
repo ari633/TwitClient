@@ -38,7 +38,7 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	
 	/**
 	 * constructor sets up adapter, passing 'from' data and 'to' views
-	 * @param context
+	 * @param context @
 	 * @param c
 	 */
 	public UpdateAdapter(Context context, Cursor c) {

@@ -79,6 +79,7 @@ import android.util.Log;
      * @return ContentValues result
      */
 	
+	
 	public static ContentValues getValues(Status status){
 		Log.v("TwitDataHelper", "converting values");
 		
