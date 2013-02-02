@@ -18,7 +18,7 @@ import android.util.Log;
 
 	public class TwitDataHelper extends SQLiteOpenHelper{
 		/**db version*/
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 		/**database name*/
 	private static final String DATABASE_NAME = "home.db";
 		/**ID column*/
@@ -31,11 +31,14 @@ import android.util.Log;
 	private static final String TIME_COL = "update_time";
 		/**user profile image*/
 	private static final String USER_IMG = "user_img";
+		/**Timeline Type e.g. Home timeline, Mention timeline*/
+	private static final String TWEET_TYPE = "tweet_type";
+	
 	
 		/**database creation string*/
 	private static final String DATABASE_CREATE = "CREATE TABLE home (" + HOME_COL + " INTEGER NOT NULL " +
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
-					TIME_COL + " INTEGER, " + USER_IMG + " TEXT);";
+					TIME_COL + " INTEGER, " + USER_IMG + " TEXT, " + TWEET_TYPE + " TEXT);";
 
 	
 	
@@ -62,10 +65,15 @@ import android.util.Log;
      */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    	Log.v("TwitDataHelper", "upgrading db");
-		db.execSQL("DROP TABLE IF EXISTS home");
-		db.execSQL("VACUUM");
-		onCreate(db);
+    	
+    	if (oldVersion < 2) {
+    		Log.v("TwitDataHelper", "upgrading db");
+            final String ALTER_TBL = "ALTER TABLE home ADD COLUMN "+ TWEET_TYPE +" text ;";
+            db.execSQL(ALTER_TBL);
+        }    	
+		//db.execSQL("DROP TABLE IF EXISTS home");
+		//db.execSQL("VACUUM");
+		//onCreate(db);
 	}
 	
     /**

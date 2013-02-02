@@ -33,7 +33,7 @@
 		<activity android:name=".ClientTweet" ></activity> 
 				
 		<activity android:name=".Message" ></activity>
-		<activity android:name=".Mention" ></activity>
+		<activity android:name="com.tugasakhir.twitclient.MentionActivity" ></activity>
 		<activity android:name=".Favorite" ></activity>
 		<activity android:name=".TwitClientActivity" ></activity>
 	

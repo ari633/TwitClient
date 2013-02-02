@@ -141,7 +141,7 @@ public class Main extends TabActivity implements OnClickListener {
 		tabHost.addTab(spec);  
     	
     	
-    	intent = new Intent().setClass(this, Mention.class);
+    	intent = new Intent().setClass(this, MentionActivity.class);
 		spec = tabHost.newTabSpec("mention").setIndicator("Mention",res.getDrawable(R.drawable.ic_tab_interaksi)).setContent(intent);
 		tabHost.addTab(spec);  
 
