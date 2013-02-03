@@ -64,7 +64,7 @@ public class Main extends TabActivity implements OnClickListener {
         	
         }else{
         
-        	setupTimeline();
+        	startTimeLine();
         	
         }
 		
@@ -117,7 +117,7 @@ public class Main extends TabActivity implements OnClickListener {
 		   	            .putString("user_secret", accToken.getTokenSecret())
 		   	            .commit();
 		    	        //display the timeline
-		   	        	setupTimeline();
+		   	        	startTimeLine();
 		    	
 		   	    }
 		   	    catch (TwitterException te)
@@ -126,7 +126,7 @@ public class Main extends TabActivity implements OnClickListener {
 	    } 
 
 	
-	public void setupTimeline(){
+	public void startTimeLine(){
     	setContentView(R.layout.main);
 		LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
 		tweetClicker.setOnClickListener(this);

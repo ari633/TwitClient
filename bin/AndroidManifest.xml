@@ -33,10 +33,10 @@
 		<activity android:name=".ClientTweet" ></activity> 
 				
 		<activity android:name=".Message" ></activity>
-		<activity android:name="com.tugasakhir.twitclient.MentionActivity" ></activity>
+		<activity android:name=".MentionActivity" ></activity>
 		<activity android:name=".Favorite" ></activity>
 		<activity android:name=".TwitClientActivity" ></activity>
-	
+		<activity android:name=".TimeLineData" ></activity>
 					
 		<service android:name=".TimelineService" /> 
         
