@@ -31,6 +31,8 @@ public class TimelineService extends Service{
 	/**updater thread object*/
 	private TimelineUpdater twitUpdater;
 	
+	private MentionTimelineUpdater mentionUpdater;
+	
 	/*delay between fethcing  new tweets*/
 	private static int mins = 1;
 	private static final long FETCH_DELAY = mins * (60*1000);
@@ -73,8 +75,10 @@ public class TimelineService extends Service{
 		twitHandler = new Handler();
 		//create an instance of the updater class
 		twitUpdater = new TimelineUpdater();
+		mentionUpdater = new MentionTimelineUpdater();
 		//add to run queue
 		twitHandler.post(twitUpdater);
+		twitHandler.post(mentionUpdater);
 		//return sticky
 		return START_STICKY;
 	}
@@ -116,7 +120,7 @@ public class TimelineService extends Service{
 				for (Status statusUpdate : homeTimeline) 
 				{
 						//call the getValues method of the data helper class, passing the new updates
-					ContentValues timelineValues = TwitDataHelper.getValues(statusUpdate);
+					ContentValues timelineValues = TwitDataHelper.getValuesTimeline(statusUpdate);
 					twitDB.insertOrThrow("home", null, timelineValues);
 						//confirm we have new updates
 					statusChanges = true;
@@ -130,6 +134,47 @@ public class TimelineService extends Service{
 			{
 					//this should be received in the main timeline class
 				sendBroadcast(new Intent("TWITTER_UPDATES"));
+			}
+			//delay fetching new updates
+			twitHandler.postDelayed(this, FETCH_DELAY);
+		}
+		
+	}
+	
+	
+	/**
+	 * TimelineUpdater class implements the runnable interface
+	 */
+	class MentionTimelineUpdater implements Runnable 
+	{
+		
+		//run method
+		public void run() {
+			//check for updates - assume none
+			boolean statusChanges = false;
+			try {
+				
+				//retrieve the new home timeline tweets as a list
+				List<Status> mentionTimeline = timelineTwitter.getMentions();
+				
+				//iterate through new status updates
+				for (Status statusUpdate : mentionTimeline) 
+				{
+						//call the getValues method of the data helper class, passing the new updates
+					ContentValues mentionValues = TwitDataHelper.getValuesMention(statusUpdate);
+					twitDB.insertOrThrow("mentions", null, mentionValues);
+						//confirm we have new updates
+					statusChanges = true;
+				}				
+				
+			} catch (Exception te) {
+				Log.e(LOG_TAG, "Exception: " + te);
+			}
+			//if we have new updates, send a broadcast
+			if (statusChanges) 
+			{
+					//this should be received in the main timeline class
+				sendBroadcast(new Intent("MENTIONS_UPDATES"));
 			}
 			//delay fetching new updates
 			twitHandler.postDelayed(this, FETCH_DELAY);

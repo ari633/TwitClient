@@ -18,7 +18,7 @@ import android.util.Log;
 
 	public class TwitDataHelper extends SQLiteOpenHelper{
 		/**db version*/
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 		/**database name*/
 	private static final String DATABASE_NAME = "home.db";
 		/**ID column*/
@@ -32,13 +32,16 @@ import android.util.Log;
 		/**user profile image*/
 	private static final String USER_IMG = "user_img";
 		/**Timeline Type e.g. Home timeline, Mention timeline*/
-	private static final String TWEET_TYPE = "tweet_type";
 	
 	
 		/**database creation string*/
-	private static final String DATABASE_CREATE = "CREATE TABLE home (" + HOME_COL + " INTEGER NOT NULL " +
+	private static final String DATABASE_CREATE1 = "CREATE TABLE home (" + HOME_COL + " INTEGER NOT NULL " +
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
-					TIME_COL + " INTEGER, " + USER_IMG + " TEXT, " + TWEET_TYPE + " TEXT);";
+					TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
+	
+	private static final String DATABASE_CREATE2 = "CREATE TABLE mentions (" + HOME_COL + " INTEGER NOT NULL " +
+			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
+			TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
 
 	
 	
@@ -57,7 +60,8 @@ import android.util.Log;
 	@Override
 	public void onCreate(SQLiteDatabase db) {
     	Log.v("TwitDataHelper", "creating db");
-        db.execSQL(DATABASE_CREATE);	
+        db.execSQL(DATABASE_CREATE1);	
+        db.execSQL(DATABASE_CREATE2);	
 	}
     
     /*
@@ -65,15 +69,11 @@ import android.util.Log;
      */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    	
-    	if (oldVersion < 2) {
-    		Log.v("TwitDataHelper", "upgrading db");
-            final String ALTER_TBL = "ALTER TABLE home ADD COLUMN "+ TWEET_TYPE +" text ;";
-            db.execSQL(ALTER_TBL);
-        }    	
-		//db.execSQL("DROP TABLE IF EXISTS home");
-		//db.execSQL("VACUUM");
-		//onCreate(db);
+    	    	
+		db.execSQL("DROP TABLE IF EXISTS home");
+		db.execSQL("DROP TABLE IF EXISTS mention");
+		db.execSQL("VACUUM");
+		onCreate(db);
 	}
 	
     /**
@@ -88,8 +88,8 @@ import android.util.Log;
      */
 	
 	
-	public static ContentValues getValues(Status status){
-		Log.v("TwitDataHelper", "converting values");
+	public static ContentValues getValuesTimeline(Status status){
+		Log.v("TwitDataHelper", "converting values home tl");
 		
 		ContentValues homeValues = new ContentValues();
 		
@@ -106,5 +106,27 @@ import android.util.Log;
 		return homeValues;
 		
 	}
+	
+	
+	public static ContentValues getValuesMention(Status status){
+		Log.v("TwitDataHelper", "converting values mention");
+		
+		ContentValues homeValues = new ContentValues();
+		
+        try {
+    		//get each value for the table
+        homeValues.put(HOME_COL, status.getId());
+        homeValues.put(UPDATE_COL, status.getText());
+        homeValues.put(USER_COL, status.getUser().getScreenName());
+        homeValues.put(TIME_COL, status.getCreatedAt().getTime());
+        homeValues.put(USER_IMG, status.getUser().getProfileImageURL().toString());
+	    }
+	    catch(Exception te) { Log.e("TwitDataHelper", te.getMessage()); }		
+        
+		return homeValues;
+		
+	}	
+	
+	
 	
 }
