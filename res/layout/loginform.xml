@@ -2,37 +2,43 @@
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"  >
+<AbsoluteLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="5dp"
-    android:orientation="vertical" >
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
-
-    <Button
-        android:id="@+id/signin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign In" />
+    android:orientation="vertical" 
+    android:background="@drawable/birds_and_sign"
+    >
        <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="128dp"
+            android:layout_y="186dp"
+            android:text="Sign In" />
+
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:padding="5dp" />
-</LinearLayout>
+            android:layout_x="11dp"
+            android:layout_y="40dp"
+            android:padding="5dp" >
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="128dp"
+            android:layout_y="119dp"
+            android:text="Welcome"
+            android:textStyle="bold" />
+
+</AbsoluteLayout>
 </TabHost>

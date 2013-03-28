@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
@@ -40,6 +42,11 @@ public class Main extends TabActivity implements OnClickListener {
         
         //mengetahui apakah preferensi pengguna ditetapkan
         if(twitPrefs.getString("user_token", null)==null) { 
+        	
+        	//Full Screen Activity
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         	
         	//tidak ada preferensi pengguna sehingga meminta untuk masuk 
         	setContentView(R.layout.loginform);
