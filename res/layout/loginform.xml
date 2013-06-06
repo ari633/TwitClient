@@ -3,25 +3,34 @@
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"  >
-<AbsoluteLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="5dp"
-    android:orientation="vertical" 
-    android:background="@drawable/birds_and_sign"
+    android:orientation="horizontal" 
+    android:background="@drawable/bg_cloudy_birdy"
     >
        <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/signin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="128dp"
-            android:layout_y="186dp"
-            android:text="Sign In" />
+	<Button
+		    android:id="@+id/signin"
+		    style="@android:style/MediaButton"
+		    android:background="@drawable/button_style"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_centerHorizontal="true"
+		    android:layout_marginTop="40dp"
+		    android:paddingBottom="15dp"
+		    android:paddingLeft="25dp"
+		    android:paddingRight="25dp"
+		    android:paddingTop="15dp"
+		    android:singleLine="true"
+		    android:text="Masuk ke Twitter"
+		    android:textStyle="bold" />
 
         <FrameLayout
             android:id="@android:id/tabcontent"
@@ -32,13 +41,6 @@
             android:padding="5dp" >
         </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="128dp"
-            android:layout_y="119dp"
-            android:text="Welcome"
-            android:textStyle="bold" />
 
-</AbsoluteLayout>
+</RelativeLayout>
 </TabHost>

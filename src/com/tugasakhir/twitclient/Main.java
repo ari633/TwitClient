@@ -14,11 +14,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 public class Main extends TabActivity implements OnClickListener {
 
@@ -100,6 +104,35 @@ public class Main extends TabActivity implements OnClickListener {
 		}
 	}
 	
+	
+	 public boolean onCreateOptionsMenu(Menu menu) {
+	        MenuInflater inflater = getMenuInflater();
+	        inflater.inflate(R.menu.main, menu);
+	        return true;
+	 }
+	 
+	 
+	 
+	 public boolean onOptionsItemSelected(MenuItem item) {
+	    	
+	        switch (item.getItemId()) {	       
+	        
+	        case R.id.settings:
+	        	Toast.makeText(this, "Hitung Persegi Panjang", Toast.LENGTH_LONG).show();	        	
+	        return true;
+	        
+	        case R.id.logout:
+	        	
+	        	  Logout();
+	        	
+	        	return true;
+	        	
+	        default:
+	        return super.onOptionsItemSelected(item);
+	        }
+	    }	 
+	 
+	
 	/* 
 	 * onNewIntent fires when user returns from Twitter authentication Web page 
 	 */
@@ -120,10 +153,11 @@ public class Main extends TabActivity implements OnClickListener {
 		   	    	AccessToken accToken = twitClient.getOAuthAccessToken(twitRequestToken, oaVerifier);
 		   	    		//add the token and secret to shared prefs for future reference
 		   	        twitPrefs.edit()
-		   	            .putString("user_token", accToken.getToken())
+		   	        	.putString("user_token", accToken.getToken())
 		   	            .putString("user_secret", accToken.getTokenSecret())
 		   	            .commit();
 		    	        //display the timeline
+		   	        	Log.e(LOG_TAG, "Starting Timeline");
 		   	        	startTimeLine();
 		    	
 		   	    }
@@ -132,6 +166,8 @@ public class Main extends TabActivity implements OnClickListener {
 	    	}
 	    } 
 
+	
+	
 	
 	public void startTimeLine(){
     	setContentView(R.layout.main);
@@ -153,15 +189,24 @@ public class Main extends TabActivity implements OnClickListener {
 		tabHost.addTab(spec);  
 
     	
-    	intent = new Intent().setClass(this, Message.class);
+    	intent = new Intent().setClass(this, MessageActivity.class);
 		spec = tabHost.newTabSpec("message").setIndicator("Message",res.getDrawable(R.drawable.ic_tab_message)).setContent(intent);
 		tabHost.addTab(spec);  
 		
 		
-    	intent = new Intent().setClass(this, Favorite.class);
+    	intent = new Intent().setClass(this, FavoriteActivity.class);
 		spec = tabHost.newTabSpec("favorite").setIndicator("Favorite",res.getDrawable(R.drawable.ic_tab_favorite)).setContent(intent);
 		tabHost.addTab(spec);  
 		//startActivity(new Intent(this, TwitClientActivity.class));
 	}
+	
+	public void Logout(){
+		twitPrefs = getSharedPreferences("TwitClientPrefs", 0); 
+		SharedPreferences.Editor editor = twitPrefs.edit();
+		editor.remove("user_token");
+		editor.remove("user_secret");
+		editor.commit();
+	}
+	
 	
 }

@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
+         />
 	<uses-permission android:name="android.permission.INTERNET" /> 
     
     <application
@@ -30,11 +30,10 @@
             
         </activity>
         
-		<activity android:name=".ClientTweet" ></activity> 
-				
-		<activity android:name=".Message" ></activity>
+		<activity android:name=".ClientTweet" ></activity> 	
+		<activity android:name=".MessageActivity" ></activity>
 		<activity android:name=".MentionActivity" ></activity>
-		<activity android:name=".Favorite" ></activity>
+		<activity android:name=".FavoriteActivity" ></activity>
 		<activity android:name=".TwitClientActivity" ></activity>
 		<activity android:name=".TimeLineData" ></activity>
 					

@@ -1,6 +1,7 @@
 package com.tugasakhir.twitclient;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +35,7 @@ public class TwitClientActivity extends Activity {
 	/**broadcast receiver for when new updates are available*/
 	private BroadcastReceiver twitStatusReceiver;
 	
-	
+	private ProgressDialog progressDialog;
 
 	//set gambar profile
 	ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;	
@@ -48,7 +49,23 @@ public class TwitClientActivity extends Activity {
     }
 
 
-	private void setupTimeline(){ 
+	private void setupTimeline(){
+		//start the progress dialog
+		progressDialog = ProgressDialog.show(TwitClientActivity.this, "", "Loading...");
+		
+		new Thread() {
+			public void run() {
+			try{
+			sleep(10000);
+			} catch (Exception e) {
+			Log.e("tag", e.getMessage());
+			}
+			// dismiss the progress dialog
+			progressDialog.dismiss();
+
+			}
+		}.start();		
+		
 		Log.v(LOG_TAG, "settings up timeline");
 		
 		setContentView(R.layout.timeline);
@@ -99,7 +116,7 @@ public class TwitClientActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			//delete db rows
-			int rowLimit = 50;
+			int rowLimit = 150;
 			if(DatabaseUtils.queryNumEntries(timelineDB, "home")>rowLimit) {
 				String deleteQuery = "DELETE FROM home WHERE "+BaseColumns._ID+" NOT IN " +
 						"(SELECT "+BaseColumns._ID+" FROM home ORDER BY "+"update_time DESC " +
