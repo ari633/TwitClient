@@ -9,7 +9,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
-import twitter4j.ProfileImage; 
+//import twitter4j.ProfileImage; 
 import android.database.Cursor; 
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase; 
@@ -38,14 +38,12 @@ public class TwitClientActivity extends Activity {
 	private ProgressDialog progressDialog;
 
 	//set gambar profile
-	ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;	
-	
+	//ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;	
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);    
-        	
-        setupTimeline(); 
-        	
+        super.onCreate(savedInstanceState);                    
+        setupTimeline();         
     }
 
 

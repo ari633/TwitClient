@@ -1,7 +1,7 @@
 package com.tugasakhir.twitclient;
 
 
-import twitter4j.ProfileImage;
+import twitter4j.Status;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -41,7 +41,8 @@ public class MentionActivity extends Activity{
 	private ProgressDialog progressDialog;
 
 	//set gambar profile
-	ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;		
+	//ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;		
+	
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);

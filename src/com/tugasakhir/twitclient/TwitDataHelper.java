@@ -18,7 +18,7 @@ import android.util.Log;
 
 	public class TwitDataHelper extends SQLiteOpenHelper{
 		/**db version*/
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 10;
 		/**database name*/
 	private static final String DATABASE_NAME = "home.db";
 		/**ID column*/
@@ -43,6 +43,10 @@ import android.util.Log;
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
 			TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
 
+	private static final String DATABASE_CREATE3 = "CREATE TABLE favorite (" + HOME_COL + " INTEGER NOT NULL " +
+			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
+			TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
+
 	
 	
 	/**
@@ -60,8 +64,10 @@ import android.util.Log;
 	@Override
 	public void onCreate(SQLiteDatabase db) {
     	Log.v("TwitDataHelper", "creating db");
-        db.execSQL(DATABASE_CREATE1);	
-        db.execSQL(DATABASE_CREATE2);	
+    	db.execSQL(DATABASE_CREATE1);
+    	db.execSQL(DATABASE_CREATE2);
+    	db.execSQL(DATABASE_CREATE3);
+    	
 	}
     
     /*
@@ -72,7 +78,8 @@ import android.util.Log;
     	    	
 		db.execSQL("DROP TABLE IF EXISTS home");
 		db.execSQL("DROP TABLE IF EXISTS mention");
-		db.execSQL("VACUUM");
+		db.execSQL("DROP TABLE IF EXISTS favorite");		
+		//db.execSQL("VACUUM");
 		onCreate(db);
 	}
 	
@@ -111,19 +118,40 @@ import android.util.Log;
 	public static ContentValues getValuesMention(Status status){
 		Log.v("TwitDataHelper", "converting values mention");
 		
-		ContentValues homeValues = new ContentValues();
+		ContentValues mentionValues = new ContentValues();
 		
         try {
-    		//get each value for the table
-        homeValues.put(HOME_COL, status.getId());
-        homeValues.put(UPDATE_COL, status.getText());
-        homeValues.put(USER_COL, status.getUser().getScreenName());
-        homeValues.put(TIME_COL, status.getCreatedAt().getTime());
-        homeValues.put(USER_IMG, status.getUser().getProfileImageURL().toString());
+    		//get each value for the tablesta
+       
+        	mentionValues.put(HOME_COL, status.getId());
+        	mentionValues.put(UPDATE_COL, status.getText());
+        	mentionValues.put(USER_COL, status.getUser().getScreenName());
+        	mentionValues.put(TIME_COL, status.getCreatedAt().getTime());
+        	mentionValues.put(USER_IMG, status.getUser().getProfileImageURL().toString());
 	    }
 	    catch(Exception te) { Log.e("TwitDataHelper", te.getMessage()); }		
         
-		return homeValues;
+		return mentionValues;
+		
+	}	
+
+	public static ContentValues getValuesFavorite(Status status){
+		Log.v("TwitDataHelper", "converting values favorite");
+		
+		ContentValues favoriteValues = new ContentValues();
+		
+        try {
+    		//get each value for the tablesta
+       
+        	favoriteValues.put(HOME_COL, status.getId());
+        	favoriteValues.put(UPDATE_COL, status.getText());
+        	favoriteValues.put(USER_COL, status.getUser().getScreenName());
+        	favoriteValues.put(TIME_COL, status.getCreatedAt().getTime());
+        	favoriteValues.put(USER_IMG, status.getUser().getProfileImageURL().toString());
+	    }
+	    catch(Exception te) { Log.e("TwitDataHelper", te.getMessage()); }		
+        
+		return favoriteValues;
 		
 	}	
 	

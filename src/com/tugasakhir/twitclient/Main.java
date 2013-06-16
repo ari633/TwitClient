@@ -118,7 +118,7 @@ public class Main extends TabActivity implements OnClickListener {
 	        switch (item.getItemId()) {	       
 	        
 	        case R.id.settings:
-	        	Toast.makeText(this, "Hitung Persegi Panjang", Toast.LENGTH_LONG).show();	        	
+	        	Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();	        	
 	        return true;
 	        
 	        case R.id.logout:
@@ -206,6 +206,8 @@ public class Main extends TabActivity implements OnClickListener {
 		editor.remove("user_token");
 		editor.remove("user_secret");
 		editor.commit();
+		finish();
+		
 	}
 	
 	

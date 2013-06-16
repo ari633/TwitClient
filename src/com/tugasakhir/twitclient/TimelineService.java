@@ -29,9 +29,10 @@ public class TimelineService extends Service{
 	/**handler for updater*/
 	private Handler twitHandler;	
 	/**updater thread object*/
-	private TimelineUpdater twitUpdater;
-	
+	private TimelineUpdater twitUpdater;	
 	private MentionTimelineUpdater mentionUpdater;
+	private FavoriteTimelineUpdater favoriteUdapter;
+	
 	
 	/*delay between fethcing  new tweets*/
 	private static int mins = 1;
@@ -76,9 +77,11 @@ public class TimelineService extends Service{
 		//create an instance of the updater class
 		twitUpdater = new TimelineUpdater();
 		mentionUpdater = new MentionTimelineUpdater();
+		favoriteUdapter = new FavoriteTimelineUpdater();
 		//add to run queue
 		twitHandler.post(twitUpdater);
 		twitHandler.post(mentionUpdater);
+		twitHandler.post(favoriteUdapter);
 		//return sticky
 		return START_STICKY;
 	}
@@ -181,5 +184,45 @@ public class TimelineService extends Service{
 		}
 		
 	}
+
+	
+	/**
+	 * TimelineUpdater class implements the runnable interface
+	 */
+	class FavoriteTimelineUpdater implements Runnable 
+	{
+		
+		//run method
+		public void run() {
+			//check for updates - assume none
+			boolean statusChanges = false;
+			try {
+				
+				//retrieve the new favorite timeline tweets as a list
+				List<Status> favoriteTimeline = timelineTwitter.getFavorites();
+				
+				//iterate through new status updates
+				for (Status statusUpdate : favoriteTimeline) 
+				{
+						//call the getValues method of the data helper class, passing the new updates
+					ContentValues favoriteValues = TwitDataHelper.getValuesFavorite(statusUpdate);
+					twitDB.insertOrThrow("favorite", null, favoriteValues);
+						//confirm we have new updates
+					statusChanges = true;
+				}				
+				
+			} catch (Exception te) {
+				Log.e(LOG_TAG, "Exception: " + te);
+			}
+			//if we have new updates, send a broadcast
+			if (statusChanges) 
+			{
+					//this should be received in the main timeline class
+				sendBroadcast(new Intent("FAVORITES_UPDATES"));
+			}
+			//delay fetching new updates
+			twitHandler.postDelayed(this, FETCH_DELAY);
+		}
+	}	
 	
 }

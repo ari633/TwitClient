@@ -8,7 +8,7 @@ public class MessageActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		TextView textview = new TextView(this);
-		textview.setText("Message test Lorem ipsum dolor sit amet");
+		textview.setText("Underconstruction");
 		setContentView(textview);
 	}
 }
