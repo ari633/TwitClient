@@ -50,23 +50,7 @@ public class FavoriteActivity extends Activity{
 	}
 	
 	
-	private void setupFavorite(){ 
-		//start the progress dialog
-		progressDialog = ProgressDialog.show(FavoriteActivity.this, "", "Loading...");
-		
-		new Thread() {
-			public void run() {
-			try{
-			sleep(10000);
-			} catch (Exception e) {
-			Log.e("tag", e.getMessage());
-			}
-			// dismiss the progress dialog
-			progressDialog.dismiss();
-
-			}
-		}.start();			
-		
+	private void setupFavorite(){ 				
 		Log.v(LOG_TAG, "settings up favorite");
 		
 		setContentView(R.layout.timeline);

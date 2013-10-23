@@ -1,10 +1,8 @@
 package com.tugasakhir.twitclient;
 
 
-import twitter4j.Status;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,8 +36,6 @@ public class MentionActivity extends Activity{
 	/**broadcast receiver for when new updates are available*/
 	private BroadcastReceiver twitStatusReceiver;
 	
-	private ProgressDialog progressDialog;
-
 	//set gambar profile
 	//ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;		
 	
@@ -52,22 +48,7 @@ public class MentionActivity extends Activity{
 	
 	
 	private void setupMention(){ 
-		//start the progress dialog
-		progressDialog = ProgressDialog.show(MentionActivity.this, "", "Loading...");
-		
-		new Thread() {
-			public void run() {
-			try{
-			sleep(10000);
-			} catch (Exception e) {
-			Log.e("tag", e.getMessage());
-			}
-			// dismiss the progress dialog
-			progressDialog.dismiss();
-
-			}
-		}.start();			
-		
+					
 		Log.v(LOG_TAG, "settings up mentions");
 		
 		setContentView(R.layout.timeline);

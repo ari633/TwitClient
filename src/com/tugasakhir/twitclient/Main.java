@@ -1,16 +1,23 @@
 package com.tugasakhir.twitclient;
 
+import java.util.List;
+
+
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import android.app.TabActivity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +44,7 @@ public class Main extends TabActivity implements OnClickListener {
 	private RequestToken twitRequestToken; 
 	/**shared preferences to store user details*/
 	private SharedPreferences twitPrefs; 	
+	private SQLiteDatabase twitDB;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 				
@@ -112,25 +120,7 @@ public class Main extends TabActivity implements OnClickListener {
 	 }
 	 
 	 
-	 
-	 public boolean onOptionsItemSelected(MenuItem item) {
-	    	
-	        switch (item.getItemId()) {	       
-	        
-	        case R.id.settings:
-	        	Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();	        	
-	        return true;
-	        
-	        case R.id.logout:
-	        	
-	        	  Logout();
-	        	
-	        	return true;
-	        	
-	        default:
-	        return super.onOptionsItemSelected(item);
-	        }
-	    }	 
+ 
 	 
 	
 	/* 
@@ -199,6 +189,29 @@ public class Main extends TabActivity implements OnClickListener {
 		tabHost.addTab(spec);  
 		//startActivity(new Intent(this, TwitClientActivity.class));
 	}
+	
+	 
+	 public boolean onOptionsItemSelected(MenuItem item) {
+	    	
+	        switch (item.getItemId()) {	       
+	        
+	        case R.id.settings:
+	        	Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();	        	
+	        return true;
+	        
+	        case R.id.logout:
+	        	  Logout();
+	        return true;
+	        
+	        case R.id.refresh:
+	        	
+	        Toast.makeText(this, "Refreshed", Toast.LENGTH_LONG).show();	
+	        return true;
+	        	
+	        default:
+	        return super.onOptionsItemSelected(item);
+	        }
+	    }		
 	
 	public void Logout(){
 		twitPrefs = getSharedPreferences("TwitClientPrefs", 0); 

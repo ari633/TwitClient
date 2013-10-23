@@ -35,7 +35,7 @@ public class TimelineService extends Service{
 	
 	
 	/*delay between fethcing  new tweets*/
-	private static int mins = 1;
+	private static int mins = 10;
 	private static final long FETCH_DELAY = mins * (60*1000);
 	//debugging tag
 	private String LOG_TAG = "TimelineService";
@@ -103,7 +103,7 @@ public class TimelineService extends Service{
 		return null;
 	}
 	
-	
+
 	/**
 	 * TimelineUpdater class implements the runnable interface
 	 */
@@ -140,6 +140,7 @@ public class TimelineService extends Service{
 			}
 			//delay fetching new updates
 			twitHandler.postDelayed(this, FETCH_DELAY);
+			
 		}
 		
 	}

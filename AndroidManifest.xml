@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Main" android:launchMode="singleInstance" 
-            android:label="@string/title_activity_twit_client" >
+            android:label="@string/title_activity_twit_client"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
