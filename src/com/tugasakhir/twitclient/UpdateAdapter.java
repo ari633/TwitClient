@@ -23,6 +23,9 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.library.imageloader.*;
+
 /**
  * Apapter class binds the update data to the views in the user interface
  * - when new Twitter updates are received, they appear in the main timeline
@@ -36,6 +39,9 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	
 	private String LOG_TAG = "UpdateAdapter";
 	
+	public ImageLoader imageLoader;
+	
+	int loader = R.drawable.ic_launcher;
 	/**
 	 * constructor sets up adapter, passing 'from' data and 'to' views
 	 * @param context @
@@ -43,6 +49,7 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	 */
 	public UpdateAdapter(Context context, Cursor c) {
 		super(context, R.layout.update, c, from, to);
+		imageLoader=new ImageLoader(context.getApplicationContext());
 	}
 	
 	/*
@@ -57,7 +64,8 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 		 * for binding the data to the views
 		 * - we set the image, add tags for data, format the time created and setup click listeners
 		 */
-
+		
+		/*
 		try 
 		{
 			//get profile image
@@ -67,6 +75,10 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 			profPic.setImageDrawable(Drawable.createFromStream((InputStream)profileURL.getContent(), ""));
 		}
 		catch(Exception te) { Log.e(LOG_TAG, te.getMessage()); }
+		*/
+		String urlImage = cursor.getString(cursor.getColumnIndex("user_img"));
+		ImageView profPic = (ImageView)row.findViewById(R.id.userImg);
+		imageLoader.DisplayImage(urlImage, loader, profPic);
 
 		//get the update time
 		long createdAt = cursor.getLong(cursor.getColumnIndex("update_time"));
