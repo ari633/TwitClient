@@ -1,77 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="7dp"
-	android:paddingBottom="3dp"
-    android:orientation="horizontal" >
-
-    <ImageView
-        android:id="@+id/userImg"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/profilebg" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+    
+    
+    <LinearLayout android:id="@+id/listImage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/userScreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:textColor="@color/control_two"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/updateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textColor="#cccccc"
-                android:textStyle="italic" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/updateText"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:layout_marginBottom="5dp"
-            android:autoLink="all"
-            android:textColorLink="@color/control_one"
-            android:textColor="#000000" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/retweet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/updatebtnbg"
-                android:textColor="#ffffff"
-                android:text="retweet" />
-
-            <Button
-                android:id="@+id/reply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/updatebtnbg"
-                android:textColor="#ffffff"
-                android:text="reply" />
-        </LinearLayout>
+        android:padding="3dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/profilebg" 
+        android:orientation="vertical">             
+      		<ImageView
+            android:id="@+id/userImg"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:src="@drawable/test_image"/>            
     </LinearLayout>
 
-</LinearLayout>
+	   
+	    
+	<TextView
+	        android:id="@+id/userScreen"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignTop="@+id/listImage"
+	        android:layout_toRightOf="@+id/listImage"
+	        android:text="Ari Pratomo"
+	        android:textColor="@color/control_two"
+	        android:typeface="sans"
+	        android:textSize="12dip"
+	        android:textStyle="bold"/>      
+	    
+	<TextView
+	        android:id="@+id/updateText"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/userScreen"
+	        android:textColor="#333333"
+	        android:autoLink="all"
+	        android:textColorLink="@color/control_one"
+	        android:textSize="12dip"
+	        android:layout_marginTop="1dip"
+	        android:layout_toRightOf="@+id/listImage"
+	        android:text="Just gona stand there and  gona stand there and Just gona stand there and Just gona stand there and..." />	       
+    
+    <TextView
+        android:id="@+id/updateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/userScreen"
+        android:gravity="right"
+        android:text="5:45"
+        android:layout_marginRight="5dip"
+        android:textSize="12dip"
+        android:textColor="#dddddd"
+        android:textStyle="italic"/>
+
+	    <Button
+	        android:id="@+id/reply"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/retweet"
+	        android:layout_alignBottom="@+id/retweet"
+	        android:layout_alignRight="@+id/updateTime"
+	        android:background="@drawable/updatebtnbg"
+	        android:text="reply"
+	        android:textColor="#ffffff" />
+
+	    <Button
+	        android:id="@+id/retweet"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/updateText"
+	        android:layout_marginRight="16dp"
+	        android:layout_toLeftOf="@+id/reply"
+	        android:background="@drawable/updatebtnbg"
+	        android:text="retweet"
+	        android:textColor="#ffffff" />
+    	
+</RelativeLayout>

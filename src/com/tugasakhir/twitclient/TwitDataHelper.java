@@ -1,5 +1,6 @@
 package com.tugasakhir.twitclient;
 
+import twitter4j.DirectMessage;
 import twitter4j.Status;
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,10 +18,12 @@ import android.util.Log;
  */
 
 	public class TwitDataHelper extends SQLiteOpenHelper{
+		
+	private SQLiteDatabase db;
 		/**db version*/
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 12;
 		/**database name*/
-	private static final String DATABASE_NAME = "home.db";
+	private static final String DATABASE_NAME = "twitter.db";
 		/**ID column*/
 	private static final String HOME_COL = BaseColumns._ID;
 		/**tweet text*/
@@ -33,6 +36,15 @@ import android.util.Log;
 	private static final String USER_IMG = "user_img";
 		/**Timeline Type e.g. Home timeline, Mention timeline*/
 	
+	/**Tambahan Colom untuk messages**/
+	private static final String MSG_RECIPIENT_COL = "recipient";
+	private static final String MSG_RECIPIENT_ID_COL = "recipient_id";
+	private static final String MSG_RECIPIENT_NAME_COL = "recipient_name";
+	private static final String MSG_RECIPIENT_IMG_COL = "recipient_img";
+	private static final String MSG_SENDER_COL = "sender";
+	private static final String MSG_SENDER_ID_COL = "sender_id";
+	private static final String MSG_SENDER_NAME_COL = "sender_name";
+	private static final String MSG_SENDER_IMG_COL = "sender_img";
 	
 		/**database creation string*/
 	private static final String DATABASE_CREATE1 = "CREATE TABLE home (" + HOME_COL + " INTEGER NOT NULL " +
@@ -46,8 +58,11 @@ import android.util.Log;
 	private static final String DATABASE_CREATE3 = "CREATE TABLE favorite (" + HOME_COL + " INTEGER NOT NULL " +
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
 			TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
-
 	
+	/*Create messages table*/
+	private static final String DATABASE_CREATE4 = "CREATE TABLE messages ("+ HOME_COL + " INTEGER NOT NULL " + 
+			" PRIMARY KEY, "+ MSG_RECIPIENT_COL +" TEXT, "+ MSG_RECIPIENT_ID_COL +" INTEGER, "+MSG_RECIPIENT_NAME_COL+" TEXT, "+ MSG_RECIPIENT_IMG_COL + " TEXT, "+
+			MSG_SENDER_COL + " TEXT, "+ MSG_SENDER_ID_COL +" INTEGER, "+ MSG_SENDER_NAME_COL +" TEXT, "+ MSG_SENDER_IMG_COL+ " TEXT, "+ TIME_COL +" INTEGER, "+ UPDATE_COL + " TEXT )";
 	
 	/**
 	 * Constructor method
@@ -67,7 +82,7 @@ import android.util.Log;
     	db.execSQL(DATABASE_CREATE1);
     	db.execSQL(DATABASE_CREATE2);
     	db.execSQL(DATABASE_CREATE3);
-    	
+    	db.execSQL(DATABASE_CREATE4);
 	}
     
     /*
@@ -78,7 +93,8 @@ import android.util.Log;
     	    	
 		db.execSQL("DROP TABLE IF EXISTS home");
 		db.execSQL("DROP TABLE IF EXISTS mention");
-		db.execSQL("DROP TABLE IF EXISTS favorite");		
+		db.execSQL("DROP TABLE IF EXISTS favorite");	
+		db.execSQL("DROP TABLE IF EXISTS messages");	
 		//db.execSQL("VACUUM");
 		onCreate(db);
 	}
@@ -155,6 +171,34 @@ import android.util.Log;
 		
 	}	
 	
+	public static ContentValues getValuesMessages(DirectMessage dm){
+		Log.v("TwitDataHelper", "converting values messages");
+		ContentValues messagesValues = new ContentValues();
+		try {
+			messagesValues.put(HOME_COL, dm.getId());
+			messagesValues.put(MSG_RECIPIENT_ID_COL, dm.getRecipientId());
+			messagesValues.put(MSG_RECIPIENT_NAME_COL, dm.getRecipientScreenName());
+			messagesValues.put(MSG_RECIPIENT_IMG_COL, dm.getRecipient().getProfileImageURL().toString());
+			messagesValues.put(MSG_SENDER_ID_COL, dm.getSenderId());
+			messagesValues.put(MSG_SENDER_NAME_COL, dm.getRecipientScreenName());
+			messagesValues.put(MSG_SENDER_IMG_COL, dm.getRecipient().getProfileImageURL().toString());
+			messagesValues.put(UPDATE_COL, dm.getText());
+			messagesValues.put(TIME_COL, dm.getCreatedAt().getTime());
+			
+		} catch (Exception e) {
+			Log.e("TwitDataHelper", e.getMessage());
+		}
+		return messagesValues;
+	}
 	
+	
+	public void removeAll(){	
+		Log.v("TwitDataHelper", "delete tweet data");
+		db = getWritableDatabase();
+		db.delete("home", null, null);
+		db.delete("mentions", null, null);
+		db.delete("favorite", null, null);
+		db.delete("messages", null, null);		
+	}
 	
 }

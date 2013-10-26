@@ -53,12 +53,12 @@ public class MessageActivity extends Activity{
 		.build();
 		//instantiate new twitter
 		dmTwitter = new TwitterFactory(twitConf).getInstance();		
-		Paging paging = new Paging(1, 100);
+
 		
 		ArrayList<HashMap<String, String>> messages = new ArrayList<HashMap<String,String>>();
 		//TextView textview = new TextView(this);
 		try {
-			List<DirectMessage> directMessage =  dmTwitter.getDirectMessages(paging);
+			List<DirectMessage> directMessage =  dmTwitter.getDirectMessages();
 			
 			for(DirectMessage dm:directMessage){
 				String sender = dm.getSenderScreenName();
@@ -97,13 +97,5 @@ public class MessageActivity extends Activity{
 			e.printStackTrace();
 		}
 		
-		//setContentView(textview);
-		
-
-		/*
-		TextView textview = new TextView(this);
-		textview.setText("Underconstruction");
-		setContentView(textview);
-		*/
 	}
 }

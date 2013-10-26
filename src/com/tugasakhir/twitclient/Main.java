@@ -44,7 +44,11 @@ public class Main extends TabActivity implements OnClickListener {
 	private RequestToken twitRequestToken; 
 	/**shared preferences to store user details*/
 	private SharedPreferences twitPrefs; 	
-	private SQLiteDatabase twitDB;
+	
+	/**database helper*/
+	private TwitDataHelper timelineHelper;
+	/**update database*/
+	private SQLiteDatabase timelineDB;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 				
@@ -219,6 +223,10 @@ public class Main extends TabActivity implements OnClickListener {
 		editor.remove("user_token");
 		editor.remove("user_secret");
 		editor.commit();
+		
+		timelineHelper = new TwitDataHelper(this);
+		timelineHelper.removeAll();
+		
 		finish();
 		
 	}

@@ -1,5 +1,7 @@
 package com.tugasakhir.twitclient;
 
+import twitter4j.DirectMessage;
+import twitter4j.Paging;
 import twitter4j.Status; 
 import twitter4j.Twitter; 
 import twitter4j.TwitterFactory; 
@@ -32,7 +34,7 @@ public class TimelineService extends Service{
 	private TimelineUpdater twitUpdater;	
 	private MentionTimelineUpdater mentionUpdater;
 	private FavoriteTimelineUpdater favoriteUdapter;
-	
+	private MessageUpdapter messageUpdater;
 	
 	/*delay between fethcing  new tweets*/
 	private static int mins = 1;
@@ -77,11 +79,13 @@ public class TimelineService extends Service{
 		//create an instance of the updater class
 		twitUpdater = new TimelineUpdater();
 		mentionUpdater = new MentionTimelineUpdater();
+		messageUpdater = new MessageUpdapter();
 		favoriteUdapter = new FavoriteTimelineUpdater();
 		//add to run queue
 		twitHandler.post(twitUpdater);
 		twitHandler.post(mentionUpdater);
 		twitHandler.post(favoriteUdapter);
+		twitHandler.post(messageUpdater);
 		//return sticky
 		return START_STICKY;
 	}
@@ -147,7 +151,7 @@ public class TimelineService extends Service{
 	
 	
 	/**
-	 * TimelineUpdater class implements the runnable interface
+	 * MentionTimelineUpdater class implements the runnable interface
 	 */
 	class MentionTimelineUpdater implements Runnable 
 	{
@@ -188,7 +192,7 @@ public class TimelineService extends Service{
 
 	
 	/**
-	 * TimelineUpdater class implements the runnable interface
+	 * FavoriteTimelineUpdater class implements the runnable interface
 	 */
 	class FavoriteTimelineUpdater implements Runnable 
 	{
@@ -225,5 +229,33 @@ public class TimelineService extends Service{
 			twitHandler.postDelayed(this, FETCH_DELAY);
 		}
 	}	
+	
+	/**
+	 * MessageUpdapter class implements the runnable interface
+	 */	
+	class MessageUpdapter implements Runnable
+	{
+
+		public void run() {
+
+			boolean statusChanges = false;
+			try {
+				List<DirectMessage> directMessage =  timelineTwitter.getDirectMessages();
+				for(DirectMessage dm:directMessage){
+					
+					ContentValues messagesValues = TwitDataHelper.getValuesMessages(dm);
+					twitDB.insertOrThrow("messages", null, messagesValues);
+						//confirm we have new updates
+					statusChanges = true;					
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			twitHandler.postDelayed(this, FETCH_DELAY);
+		}
+		
+	}
+	
 	
 }
