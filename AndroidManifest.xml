@@ -38,7 +38,9 @@
 		<activity android:name=".FavoriteActivity" ></activity>
 		<activity android:name=".TwitClientActivity" ></activity>
 		<activity android:name=".TimeLineData" ></activity>
-					
+		<activity android:name=".DmActivity" ></activity>
+		<activity android:name=".DmConversationActivity" ></activity>
+		 
 		<service android:name=".TimelineService" /> 
         
     </application>

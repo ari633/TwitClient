@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TableLayout       
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0" >
+
+
+        <TableRow
+            android:background="#666666" >
+
+            <LinearLayout
+                android:id="@+id/homebtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/home" />                
+            </LinearLayout>
+
+
+            
+            <LinearLayout               
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal">   
+        			                        
+                <TextView
+                android:id="@+id/userScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="UserScreen"
+                android:textColor="#ffffff" />
+                
+            </LinearLayout>
+            
+        </TableRow>
+    </TableLayout>      
+
+<EditText
+    android:id="@+id/textReplyDM"
+    android:layout_width="match_parent"
+    android:layout_height="61dp"
+    android:ems="10"
+    android:lines="3"
+    android:maxLength="140"
+    android:singleLine="false" >
+
+    <requestFocus />
+</EditText>
+
+    <Button
+        android:id="@+id/reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:layout_marginBottom="15dp"
+        android:background="@drawable/replybtnbg"
+        android:text="reply" />
+    
+    
+    
+    
+    <ListView android:id="@+id/listConversation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F3f3f3" >
+        
+    </ListView>
+
+</LinearLayout>

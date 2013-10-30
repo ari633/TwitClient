@@ -1,23 +1,17 @@
 package com.tugasakhir.twitclient;
 
-import java.util.List;
 
-
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import android.app.TabActivity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,8 +41,6 @@ public class Main extends TabActivity implements OnClickListener {
 	
 	/**database helper*/
 	private TwitDataHelper timelineHelper;
-	/**update database*/
-	private SQLiteDatabase timelineDB;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 				
@@ -183,8 +175,8 @@ public class Main extends TabActivity implements OnClickListener {
 		tabHost.addTab(spec);  
 
     	
-    	intent = new Intent().setClass(this, MessageActivity.class);
-		spec = tabHost.newTabSpec("message").setIndicator("Message",res.getDrawable(R.drawable.ic_tab_message)).setContent(intent);
+    	intent = new Intent().setClass(this, DmActivity.class);
+		spec = tabHost.newTabSpec("message").setIndicator("Dm",res.getDrawable(R.drawable.ic_tab_message)).setContent(intent);
 		tabHost.addTab(spec);  
 		
 		

@@ -16,8 +16,7 @@
       		<ImageView
             android:id="@+id/list_image"
             android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:src="@drawable/test_image"/>            
+            android:layout_height="50dip"/>            
     </LinearLayout>
 
 	   
@@ -31,18 +30,17 @@
 	        android:text="Ari Pratomo"
 	        android:textColor="@color/control_two"
 	        android:typeface="sans"
-	        android:textSize="12dip"
+	        android:textSize="12sp"
 	        android:textStyle="bold"/>      
 	    
 	<TextView
 	        android:id="@+id/messageText"
+	        android:clickable="true"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/userScreen"
 	        android:textColor="#333333"
-	        android:autoLink="all"
-	        android:textColorLink="@color/control_one"
-	        android:textSize="12dip"
+	        android:textSize="12sp"
 	        android:layout_marginTop="1dip"
 	        android:layout_toRightOf="@+id/userImg"
 	        android:text="Just gona stand there and Just gona stand there and Just gona stand there and Just gona stand there and..." />	       

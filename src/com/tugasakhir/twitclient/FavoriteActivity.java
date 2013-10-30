@@ -3,7 +3,6 @@ package com.tugasakhir.twitclient;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +36,6 @@ public class FavoriteActivity extends Activity{
 	/**broadcast receiver for when new updates are available*/
 	private BroadcastReceiver twitStatusReceiver;
 	
-	private ProgressDialog progressDialog;
 
 	//set gambar profile
 	//ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;		

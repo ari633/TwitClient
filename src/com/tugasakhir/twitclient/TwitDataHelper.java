@@ -180,8 +180,8 @@ import android.util.Log;
 			messagesValues.put(MSG_RECIPIENT_NAME_COL, dm.getRecipientScreenName());
 			messagesValues.put(MSG_RECIPIENT_IMG_COL, dm.getRecipient().getProfileImageURL().toString());
 			messagesValues.put(MSG_SENDER_ID_COL, dm.getSenderId());
-			messagesValues.put(MSG_SENDER_NAME_COL, dm.getRecipientScreenName());
-			messagesValues.put(MSG_SENDER_IMG_COL, dm.getRecipient().getProfileImageURL().toString());
+			messagesValues.put(MSG_SENDER_NAME_COL, dm.getSenderScreenName());
+			messagesValues.put(MSG_SENDER_IMG_COL, dm.getSender().getProfileImageURL().toString());
 			messagesValues.put(UPDATE_COL, dm.getText());
 			messagesValues.put(TIME_COL, dm.getCreatedAt().getTime());
 			

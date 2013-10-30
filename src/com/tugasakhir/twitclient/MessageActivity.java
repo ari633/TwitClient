@@ -1,12 +1,10 @@
 package com.tugasakhir.twitclient;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import twitter4j.DirectMessage;
-import twitter4j.Paging;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -21,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class MessageActivity extends Activity{
 	
@@ -58,7 +57,7 @@ public class MessageActivity extends Activity{
 		ArrayList<HashMap<String, String>> messages = new ArrayList<HashMap<String,String>>();
 		//TextView textview = new TextView(this);
 		try {
-			List<DirectMessage> directMessage =  dmTwitter.getDirectMessages();
+			List<DirectMessage> directMessage =  dmTwitter.getSentDirectMessages();
 			
 			for(DirectMessage dm:directMessage){
 				String sender = dm.getSenderScreenName();
@@ -86,7 +85,7 @@ public class MessageActivity extends Activity{
 
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					// TODO Auto-generated method stub
-					
+					Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_SHORT).show();
 				}
 	        	
 	        });			

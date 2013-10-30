@@ -35,7 +35,7 @@ public class TimelineService extends Service{
 	private MentionTimelineUpdater mentionUpdater;
 	private FavoriteTimelineUpdater favoriteUdapter;
 	private MessageUpdapter messageUpdater;
-	
+	private SendMessageUpdapter sendMessageUpdater;
 	/*delay between fethcing  new tweets*/
 	private static int mins = 1;
 	private static final long FETCH_DELAY = mins * (60*1000);
@@ -81,11 +81,13 @@ public class TimelineService extends Service{
 		mentionUpdater = new MentionTimelineUpdater();
 		messageUpdater = new MessageUpdapter();
 		favoriteUdapter = new FavoriteTimelineUpdater();
+		sendMessageUpdater = new SendMessageUpdapter();
 		//add to run queue
 		twitHandler.post(twitUpdater);
 		twitHandler.post(mentionUpdater);
 		twitHandler.post(favoriteUdapter);
 		twitHandler.post(messageUpdater);
+		twitHandler.post(sendMessageUpdater);
 		//return sticky
 		return START_STICKY;
 	}
@@ -240,6 +242,7 @@ public class TimelineService extends Service{
 
 			boolean statusChanges = false;
 			try {
+				//list DM masuk
 				List<DirectMessage> directMessage =  timelineTwitter.getDirectMessages();
 				for(DirectMessage dm:directMessage){
 					
@@ -252,10 +255,49 @@ public class TimelineService extends Service{
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
+			//if we have new updates, send a broadcast
+			if (statusChanges) 
+			{
+					//this should be received in the main DM class
+				sendBroadcast(new Intent("DM_UPDATES"));
+			}			
 			twitHandler.postDelayed(this, FETCH_DELAY);
 		}
 		
 	}
+	
+	
+	class SendMessageUpdapter implements Runnable
+	{
+
+		public void run() {
+
+			boolean statusChanges = false;
+			try {
+				
+				//list DM terkirim
+				List<DirectMessage> sentDirectMessage = timelineTwitter.getSentDirectMessages();
+				for (DirectMessage sentDM:sentDirectMessage) {
+					
+					ContentValues messagesValues = TwitDataHelper.getValuesMessages(sentDM);
+					twitDB.insertOrThrow("messages", null, messagesValues);
+					statusChanges = true;
+					
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			//if we have new updates, send a broadcast
+			if (statusChanges) 
+			{
+					//this should be received in the main DM class
+				sendBroadcast(new Intent("SEND_DM_UPDATES"));
+			}			
+			twitHandler.postDelayed(this, FETCH_DELAY);
+		}
+		
+	}	
 	
 	
 }
