@@ -1,7 +1,9 @@
 package com.tugasakhir.twitclient;
 
 import twitter4j.DirectMessage;
+import twitter4j.Friendship;
 import twitter4j.Status;
+import twitter4j.User;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,11 +23,11 @@ import android.util.Log;
 		
 	private SQLiteDatabase db;
 		/**db version*/
-	private static final int DATABASE_VERSION = 12;
+	private static final int DATABASE_VERSION = 13;
 		/**database name*/
 	private static final String DATABASE_NAME = "twitter.db";
 		/**ID column*/
-	private static final String HOME_COL = BaseColumns._ID;
+	private static final String ID_COL = BaseColumns._ID;
 		/**tweet text*/
 	private static final String UPDATE_COL = "update_text";
 		/**twitter screen name*/
@@ -35,6 +37,8 @@ import android.util.Log;
 		/**user profile image*/
 	private static final String USER_IMG = "user_img";
 		/**Timeline Type e.g. Home timeline, Mention timeline*/
+	
+	
 	
 	/**Tambahan Colom untuk messages**/
 	private static final String MSG_RECIPIENT_COL = "recipient";
@@ -46,23 +50,38 @@ import android.util.Log;
 	private static final String MSG_SENDER_NAME_COL = "sender_name";
 	private static final String MSG_SENDER_IMG_COL = "sender_img";
 	
+	/**Group col**/
+	private static final String GROUP_TITLE = "title";
+	private static final String ID_GROUP = "id_group";
+	
 		/**database creation string*/
-	private static final String DATABASE_CREATE1 = "CREATE TABLE home (" + HOME_COL + " INTEGER NOT NULL " +
+	private static final String DATABASE_CREATE1 = "CREATE TABLE home (" + ID_COL + " INTEGER NOT NULL " +
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
 					TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
 	
-	private static final String DATABASE_CREATE2 = "CREATE TABLE mentions (" + HOME_COL + " INTEGER NOT NULL " +
+	private static final String DATABASE_CREATE2 = "CREATE TABLE mentions (" + ID_COL + " INTEGER NOT NULL " +
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
 			TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
 
-	private static final String DATABASE_CREATE3 = "CREATE TABLE favorite (" + HOME_COL + " INTEGER NOT NULL " +
+	private static final String DATABASE_CREATE3 = "CREATE TABLE favorite (" + ID_COL + " INTEGER NOT NULL " +
 			"PRIMARY KEY, " + UPDATE_COL + " TEXT, " + USER_COL + " TEXT, " +
 			TIME_COL + " INTEGER, " + USER_IMG + " TEXT);" ;
 	
 	/*Create messages table*/
-	private static final String DATABASE_CREATE4 = "CREATE TABLE messages ("+ HOME_COL + " INTEGER NOT NULL " + 
+	private static final String DATABASE_CREATE4 = "CREATE TABLE messages ("+ ID_COL + " INTEGER NOT NULL " + 
 			" PRIMARY KEY, "+ MSG_RECIPIENT_COL +" TEXT, "+ MSG_RECIPIENT_ID_COL +" INTEGER, "+MSG_RECIPIENT_NAME_COL+" TEXT, "+ MSG_RECIPIENT_IMG_COL + " TEXT, "+
-			MSG_SENDER_COL + " TEXT, "+ MSG_SENDER_ID_COL +" INTEGER, "+ MSG_SENDER_NAME_COL +" TEXT, "+ MSG_SENDER_IMG_COL+ " TEXT, "+ TIME_COL +" INTEGER, "+ UPDATE_COL + " TEXT )";
+			MSG_SENDER_COL + " TEXT, "+ MSG_SENDER_ID_COL +" INTEGER, "+ MSG_SENDER_NAME_COL +" TEXT, "+ MSG_SENDER_IMG_COL+ " TEXT, "+ TIME_COL +" INTEGER, "+ UPDATE_COL + " TEXT );";
+	
+	
+	/*Table Account follower list*/
+	private static final String DATABASE_CREATE5 = "CREATE TABLE following ("+ ID_COL +" INTEGER NOT NULL "+ 
+			" PRIMARY KEY, "+ USER_COL + " TEXT, " + USER_IMG + " TEXT );";
+	
+	/**Groups table**/
+	private static final String DATABASE_CREATE6 = "CREATE TABLE groups ("+ ID_COL +" INTEGER PRIMARY KEY AUTOINCREMENT, "+ GROUP_TITLE +"  TEXT );";
+	
+	/**Group Users**/
+	private static final String DATABASE_CREATE7 = "CREATE TABLE group_users ("+ ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ ID_GROUP +" INTEGER, "+ USER_COL +" TEXT );";
 	
 	/**
 	 * Constructor method
@@ -83,6 +102,9 @@ import android.util.Log;
     	db.execSQL(DATABASE_CREATE2);
     	db.execSQL(DATABASE_CREATE3);
     	db.execSQL(DATABASE_CREATE4);
+    	db.execSQL(DATABASE_CREATE5);
+    	db.execSQL(DATABASE_CREATE6);
+    	db.execSQL(DATABASE_CREATE7);
 	}
     
     /*
@@ -95,7 +117,9 @@ import android.util.Log;
 		db.execSQL("DROP TABLE IF EXISTS mention");
 		db.execSQL("DROP TABLE IF EXISTS favorite");	
 		db.execSQL("DROP TABLE IF EXISTS messages");	
-		//db.execSQL("VACUUM");
+		db.execSQL("DROP TABLE IF EXISTS following");	
+		db.execSQL("DROP TABLE IF EXISTS groups");	
+		db.execSQL("DROP TABLE IF EXISTS group_users");	
 		onCreate(db);
 	}
 	
@@ -118,7 +142,7 @@ import android.util.Log;
 		
         try {
     		//get each value for the table
-        homeValues.put(HOME_COL, status.getId());
+        homeValues.put(ID_COL, status.getId());
         homeValues.put(UPDATE_COL, status.getText());
         homeValues.put(USER_COL, status.getUser().getScreenName());
         homeValues.put(TIME_COL, status.getCreatedAt().getTime());
@@ -139,7 +163,7 @@ import android.util.Log;
         try {
     		//get each value for the tablesta
        
-        	mentionValues.put(HOME_COL, status.getId());
+        	mentionValues.put(ID_COL, status.getId());
         	mentionValues.put(UPDATE_COL, status.getText());
         	mentionValues.put(USER_COL, status.getUser().getScreenName());
         	mentionValues.put(TIME_COL, status.getCreatedAt().getTime());
@@ -159,7 +183,7 @@ import android.util.Log;
         try {
     		//get each value for the tablesta
        
-        	favoriteValues.put(HOME_COL, status.getId());
+        	favoriteValues.put(ID_COL, status.getId());
         	favoriteValues.put(UPDATE_COL, status.getText());
         	favoriteValues.put(USER_COL, status.getUser().getScreenName());
         	favoriteValues.put(TIME_COL, status.getCreatedAt().getTime());
@@ -175,7 +199,7 @@ import android.util.Log;
 		Log.v("TwitDataHelper", "converting values messages");
 		ContentValues messagesValues = new ContentValues();
 		try {
-			messagesValues.put(HOME_COL, dm.getId());
+			messagesValues.put(ID_COL, dm.getId());
 			messagesValues.put(MSG_RECIPIENT_ID_COL, dm.getRecipientId());
 			messagesValues.put(MSG_RECIPIENT_NAME_COL, dm.getRecipientScreenName());
 			messagesValues.put(MSG_RECIPIENT_IMG_COL, dm.getRecipient().getProfileImageURL().toString());
@@ -191,6 +215,20 @@ import android.util.Log;
 		return messagesValues;
 	}
 	
+	public static ContentValues getValuesFollowing(User user){
+		Log.v("TwitDataHelper","Update following list");
+		ContentValues followingValues = new ContentValues();
+		try {
+			followingValues.put(ID_COL, user.getId());
+			followingValues.put(USER_COL, user.getScreenName());
+			followingValues.put(USER_IMG, user.getProfileImageURL().toString());
+		} catch (Exception e) {
+			// TODO: handle exception
+			Log.e("TwitDataHelper", e.getMessage());
+		}
+		return followingValues;
+	}
+	
 	
 	public void removeAll(){	
 		Log.v("TwitDataHelper", "delete tweet data");
@@ -199,6 +237,9 @@ import android.util.Log;
 		db.delete("mentions", null, null);
 		db.delete("favorite", null, null);
 		db.delete("messages", null, null);		
+		db.delete("following", null, null);
+		db.delete("groups", null, null);
+		db.delete("group_users", null, null);
 	}
 	
 }

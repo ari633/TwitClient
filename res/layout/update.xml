@@ -82,5 +82,15 @@
 	        android:background="@drawable/updatebtnbg"
 	        android:text="retweet"
 	        android:textColor="#ffffff" />
+	    <Button
+	        android:id="@+id/quote"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/updateText"
+	        android:layout_marginRight="16dp"
+	        android:layout_toLeftOf="@+id/retweet"
+	        android:background="@drawable/updatebtnbg"
+	        android:text="quote"
+	        android:textColor="#ffffff" />	    
     	
 </RelativeLayout>

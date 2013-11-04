@@ -33,6 +33,8 @@ public class ClientTweet extends Activity implements OnClickListener {
 		/**the username for the tweet if it is a reply*/
 	private String tweetName = "";
 	
+	private String tweetText = "";
+	
 	/*
 	 * onCreate called when activity is created
 	 */
@@ -86,16 +88,26 @@ public class ClientTweet extends Activity implements OnClickListener {
 	    	tweetID = extras.getLong("tweetID");
 	    		//get the user screen name for the tweet we are replying to
 	    	tweetName = extras.getString("tweetUser");
+	    		//get Tweet Text
+	    	tweetText = extras.getString("tweetText");
+	    	
+	    	if(tweetText == null && tweetName != null){
 	    		//get a reference to the text field for tweeting
-	    	EditText theReply = (EditText)findViewById(R.id.tweettext);
-	    		//start the tweet text for the reply @username
-	    	theReply.setText("@"+tweetName+" ");
-	    		//set the cursor to the end of the text for entry
-	    	theReply.setSelection(theReply.getText().length());
-	
+		    	EditText theReply = (EditText)findViewById(R.id.tweettext);
+		    		//start the tweet text for the reply @username
+		    	theReply.setText("@"+tweetName+"  ");
+		    		//set the cursor to the end of the text for entry
+		    	theReply.setSelection(theReply.getText().length());
+	    	}else if(tweetText != null){
+		    	EditText theReply = (EditText)findViewById(R.id.tweettext);
+	    			//start the tweet text for the reply @username
+		    	theReply.setText("@"+tweetName+" "+tweetText);
+		    		//set the cursor to the end of the text for entry
+		    	//theReply.setSelection(theReply.getText().length());
+	    	}
 	    }
 	    else 
-	    {
+	    {   
 	    	EditText theReply = (EditText)findViewById(R.id.tweettext);
 	    	theReply.setText("");
 	    }

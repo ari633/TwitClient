@@ -95,15 +95,19 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 		long statusID = cursor.getLong(cursor.getColumnIndex(BaseColumns._ID));
 		//get the user name
 		String statusName = cursor.getString(cursor.getColumnIndex("user_screen"));
+		//get tweetText
+		String statusText = cursor.getString(cursor.getColumnIndex("update_text"));
 		//create a StatusData object to store these
-		StatusData tweetData = new StatusData(statusID, statusName);
+		StatusData tweetData = new StatusData(statusID, statusName, statusText);
 
 		//set the status data object as tag for both retweet and reply buttons in this view
 		row.findViewById(R.id.retweet).setTag(tweetData);
 		row.findViewById(R.id.reply).setTag(tweetData);
+		row.findViewById(R.id.quote).setTag(tweetData);
 		//setup onclick listeners for the retweet and reply buttons
 		row.findViewById(R.id.retweet).setOnClickListener(tweetListener);
 		row.findViewById(R.id.reply).setOnClickListener(tweetListener);
+		row.findViewById(R.id.quote).setOnClickListener(tweetListener);
 		//setup  onclick for the user screen name within the tweet
 		row.findViewById(R.id.userScreen).setOnClickListener(tweetListener);		
 		
@@ -118,14 +122,17 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	private OnClickListener tweetListener = new OnClickListener() {
 		//onClick method
 		public void onClick(View v) {
+			
+			//get the data from the tag within the button view
+			StatusData theData = (StatusData)v.getTag();
+			
 			//which view
 			switch(v.getId()) {
 			//reply button pressed
 			case R.id.reply:
 				//create an intent for sending a new tweet
 				Intent replyIntent = new Intent(v.getContext(), ClientTweet.class);
-				//get the data from the tag within the button view
-				StatusData theData = (StatusData)v.getTag();
+
 				//pass the status ID
 				replyIntent.putExtra("tweetID", theData.getID());
 				//pass the user name
@@ -133,6 +140,14 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 				//go to the tweet screen
 				v.getContext().startActivity(replyIntent);
 				break;
+			
+			case R.id.quote:
+				Intent quoteIntent = new Intent(v.getContext(), ClientTweet.class);	
+				quoteIntent.putExtra("tweetUser", theData.getUser());
+				quoteIntent.putExtra("tweetText", theData.getText());
+				v.getContext().startActivity(quoteIntent);
+				break;
+				
 				//retweet button pressed
 			case R.id.retweet:
 				//get context

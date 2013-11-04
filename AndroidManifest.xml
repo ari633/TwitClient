@@ -40,6 +40,7 @@
 		<activity android:name=".TimeLineData" ></activity>
 		<activity android:name=".DmActivity" ></activity>
 		<activity android:name=".DmConversationActivity" ></activity>
+		<activity android:name=".GroupActivity" ></activity>
 		 
 		<service android:name=".TimelineService" /> 
         

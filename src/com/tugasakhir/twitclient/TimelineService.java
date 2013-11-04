@@ -1,10 +1,12 @@
 package com.tugasakhir.twitclient;
 
 import twitter4j.DirectMessage;
+import twitter4j.IDs;
 import twitter4j.Paging;
 import twitter4j.Status; 
 import twitter4j.Twitter; 
 import twitter4j.TwitterFactory; 
+import twitter4j.User;
 import twitter4j.conf.Configuration; 
 import twitter4j.conf.ConfigurationBuilder; 
 import android.app.Service;
@@ -15,6 +17,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log; 
+import android.widget.Toast;
+
 import java.util.List;
 
 
@@ -31,6 +35,7 @@ public class TimelineService extends Service{
 	/**handler for updater*/
 	private Handler twitHandler;	
 	/**updater thread object*/
+	private FriendsUpdater Friends;
 	private TimelineUpdater twitUpdater;	
 	private MentionTimelineUpdater mentionUpdater;
 	private FavoriteTimelineUpdater favoriteUdapter;
@@ -77,17 +82,20 @@ public class TimelineService extends Service{
 		//get handler
 		twitHandler = new Handler();
 		//create an instance of the updater class
+		
 		twitUpdater = new TimelineUpdater();
 		mentionUpdater = new MentionTimelineUpdater();
 		messageUpdater = new MessageUpdapter();
 		favoriteUdapter = new FavoriteTimelineUpdater();
 		sendMessageUpdater = new SendMessageUpdapter();
 		//add to run queue
+		
 		twitHandler.post(twitUpdater);
 		twitHandler.post(mentionUpdater);
 		twitHandler.post(favoriteUdapter);
 		twitHandler.post(messageUpdater);
 		twitHandler.post(sendMessageUpdater);
+	
 		//return sticky
 		return START_STICKY;
 	}
@@ -100,7 +108,14 @@ public class TimelineService extends Service{
 		super.onDestroy();
 		//stop the updating
 		twitHandler.removeCallbacks(twitUpdater);
+		twitHandler.removeCallbacks(mentionUpdater);
+		twitHandler.removeCallbacks(favoriteUdapter);
+		twitHandler.removeCallbacks(messageUpdater);
+		twitHandler.removeCallbacks(sendMessageUpdater);
+		
 		twitDB.close();
+		
+		 Toast.makeText(this, "service tl done", Toast.LENGTH_SHORT).show(); 
 	}
 	
 	@Override
@@ -109,7 +124,45 @@ public class TimelineService extends Service{
 		return null;
 	}
 	
+	
+	public void refreshFriends(){
+		twitHandler = new Handler();
+		Friends = new FriendsUpdater();
+		twitHandler.post(Friends);
+	}
+	
+	/*
+	 * Get Friends Following List
+	 */
+	class FriendsUpdater implements Runnable
+	{
+		public void run(){
+			long cursor = -1;
+			String myUser = "pratomoss";
+			IDs ids;
+			try {
 
+				do {
+					
+					ids = timelineTwitter.getFriendsIDs(myUser, cursor);
+					for(long id: ids.getIDs()){
+						User user = timelineTwitter.showUser(id);
+						ContentValues followingValues = TwitDataHelper.getValuesFollowing(user);
+						twitDB.insert("following", null, followingValues);
+					}
+					
+				} while ((cursor = ids.getNextCursor()) != 0);
+				
+			} catch (Exception e) {
+				Log.e(LOG_TAG, "Exception: " + e);
+			}
+			
+			//sendBroadcast(new Intent("TWITTER_UPDATES"));
+			twitHandler.postDelayed(this, FETCH_DELAY);
+		}
+	}
+	
+	
 	/**
 	 * TimelineUpdater class implements the runnable interface
 	 */

@@ -6,6 +6,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,8 @@ public class Main extends TabActivity implements OnClickListener {
 	
 	/**database helper*/
 	private TwitDataHelper timelineHelper;
+	
+	private ProgressDialog progressDialog;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 				
@@ -183,7 +186,7 @@ public class Main extends TabActivity implements OnClickListener {
     	intent = new Intent().setClass(this, FavoriteActivity.class);
 		spec = tabHost.newTabSpec("favorite").setIndicator("Favorite",res.getDrawable(R.drawable.ic_tab_favorite)).setContent(intent);
 		tabHost.addTab(spec);  
-		//startActivity(new Intent(this, TwitClientActivity.class));
+		
 	}
 	
 	 
@@ -195,13 +198,35 @@ public class Main extends TabActivity implements OnClickListener {
 	        	Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();	        	
 	        return true;
 	        
+	        case R.id.groups:
+	        	Intent i = new Intent(this, GroupActivity.class);
+	        	startActivity(i);
+	        	Toast.makeText(this, "Groups", Toast.LENGTH_LONG).show();	      
+	        return true;
+	        
 	        case R.id.logout:
 	        	  Logout();
 	        return true;
 	        
 	        case R.id.refresh:
+	    		progressDialog = ProgressDialog.show(Main.this, "", "Loading...");
+	    		
+	    		new Thread() {
+	    			public void run() {
+	    			try{
+	    			sleep(5000);
+	    			} catch (Exception e) {
+	    			Log.e("tag", e.getMessage());
+	    			}
+	    			// dismiss the progress dialog
+	    			progressDialog.dismiss();
+
+	    			}
+	    		}.start();	
+	    		
+	        	this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
 	        	
-	        Toast.makeText(this, "Refreshed", Toast.LENGTH_LONG).show();	
+	        	Toast.makeText(this, "Refreshed", Toast.LENGTH_LONG).show();	
 	        return true;
 	        	
 	        default:

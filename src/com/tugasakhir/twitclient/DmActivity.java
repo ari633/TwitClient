@@ -107,7 +107,7 @@ public class DmActivity extends Activity {
 		super.onDestroy();
 		try 
 		{
-			stopService(new Intent(this, DmActivity.class));
+			stopService(new Intent(this, TimelineService.class));
 			unregisterReceiver(dmReceiver);
 			dmDB.close();
 		}

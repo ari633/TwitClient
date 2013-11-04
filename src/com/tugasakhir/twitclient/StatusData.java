@@ -10,28 +10,41 @@ public class StatusData {
 		private long tweetID;
 		/**user screen name of tweeter*/
 		private String tweetUser;
-		
+		private String tweetText;
 		/**
 		 * Constructor receives ID and user name
 		 * @param ID
 		 * @param screenName
 		 */
-		public StatusData(long ID, String screenName) {
+		public StatusData(long ID, String screenName, String statusText) {
 				//instantiate variables
 			tweetID=ID;
 			tweetUser=screenName;
+			tweetText=statusText;
 		}
 		
 		/**
 		 * Get the ID of the tweet
 		 * @return tweetID as a long
 		 */
-		public long getID() {return tweetID;}
+		public long getID() {
+			
+			return tweetID;
+			
+		}
 		
 		/**
 		 * Get the user screen name for the tweet
 		 * @return tweetUser as a String
 		 */
-		public String getUser() {return tweetUser;}
+		public String getUser() {
+		
+			return tweetUser;
+			
+		}
+		
+		public String getText(){
+			return tweetText;
+		}
 	
 }
