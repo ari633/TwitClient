@@ -1,8 +1,11 @@
 package com.tugasakhir.twitclient;
 
+
 import android.content.Context;
 import android.database.Cursor;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -19,9 +22,14 @@ public class GroupAdapter extends SimpleCursorAdapter{
 
 	
 	public void bindView(View row, Context context, Cursor cursor){
+		super.bindView(row, context, cursor);
+				
 		TextView total = (TextView)row.findViewById(R.id.total);
 		total.setText("Total User");
+
+		
+		
 	}
 	
-	
+
 }

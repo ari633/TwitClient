@@ -196,6 +196,7 @@ public class TimelineService extends Service{
 			{
 					//this should be received in the main timeline class
 				sendBroadcast(new Intent("TWITTER_UPDATES"));
+				sendBroadcast(new Intent("USER_GROUP_UPDATES"));
 			}
 			//delay fetching new updates
 			twitHandler.postDelayed(this, FETCH_DELAY);

@@ -50,7 +50,7 @@
     </TableLayout> 
     
     <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/list_selector">
-        <TextView android:text="My Groups" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="14sp" android:textStyle="bold"/>
+        <TextView android:id="@+id/title" android:text="My Groups" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="14sp" android:textStyle="bold"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -62,7 +62,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Group" />
+            android:text="Add User" />
     </LinearLayout>
     
     

@@ -41,6 +41,9 @@
 		<activity android:name=".DmActivity" ></activity>
 		<activity android:name=".DmConversationActivity" ></activity>
 		<activity android:name=".GroupActivity" ></activity>
+		<activity android:name=".GroupForm" ></activity>
+		<activity android:name=".GroupUserActivity" ></activity>
+		<activity android:name=".GroupUserForm" ></activity>
 		 
 		<service android:name=".TimelineService" /> 
         
