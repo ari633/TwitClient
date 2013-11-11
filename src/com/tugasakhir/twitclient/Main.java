@@ -183,8 +183,8 @@ public class Main extends TabActivity implements OnClickListener {
 		tabHost.addTab(spec);  
 		
 		
-    	intent = new Intent().setClass(this, FavoriteActivity.class);
-		spec = tabHost.newTabSpec("favorite").setIndicator("Favorite",res.getDrawable(R.drawable.ic_tab_favorite)).setContent(intent);
+    	intent = new Intent().setClass(this, GroupActivity.class);
+		spec = tabHost.newTabSpec("group").setIndicator("Group",res.getDrawable(R.drawable.user_group)).setContent(intent);
 		tabHost.addTab(spec);  
 		
 	}
@@ -246,6 +246,16 @@ public class Main extends TabActivity implements OnClickListener {
 		
 		finish();
 		
+	}
+	
+	public void onResume(){
+		super.onResume();
+		//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
+	}
+	
+	public void onPause(){
+		super.onPause();
+		//stopService(new Intent(this, TimelineService.class));
 	}
 	
 	

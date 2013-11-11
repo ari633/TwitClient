@@ -38,6 +38,7 @@ public class GroupDataModel{
 	
 	public void deleteGroup(long id){
 		db.delete("groups", "_id = "+id, null);
+		db.delete("group_users", "id_group = "+id, null);
 	}
 		
 	public String getGroupTitle(Cursor c){
@@ -47,6 +48,16 @@ public class GroupDataModel{
 	/*
 	 * Group Users
 	 */
+	
+	public void deleteUserGroup(long id){
+		db.delete("group_users", "_id = "+id, null);
+	}
+	
+	public Cursor getUserByGroup(long id_group){
+		String query = "select _id, id_group, user_screen FROM group_users WHERE id_group ="+id_group;
+		return (db.rawQuery(query, null));
+	}
+	
 	public Cursor getUserByName(String username){
 		String[] user_screen = {username};
 		return (db.rawQuery("select _id, id_group, user_screen FROM group_users WHERE user_screen=?", user_screen));

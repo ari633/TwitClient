@@ -62,11 +62,7 @@ public class GroupActivity extends Activity implements OnClickListener{
         	
         });
 
-	    LinearLayout homeClicker = (LinearLayout)findViewById(R.id.homebtn);
-	    homeClicker.setOnClickListener(this);		
-		
-	    LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
-	    tweetClicker.setOnClickListener(this);	  
+
 	    
 	    Button add = (Button)findViewById(R.id.add);
 	    add.setOnClickListener(this);
@@ -81,13 +77,6 @@ public class GroupActivity extends Activity implements OnClickListener{
 	
 	public void onClick(View v) {
 		switch (v.getId()) {	
-			case R.id.homebtn:
-					finish();
-			break;
-			
-			case R.id.tweetbtn:
-				startActivity(new Intent(this, ClientTweet.class));
-			break;
 			
 			case R.id.add:
 				startActivity(new Intent(this, GroupForm.class));

@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:background="#333333"
-    android:paddingLeft="3dp"
-    android:paddingRight="3dp"
-    android:paddingBottom="5dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="5dp" >
 
-
-    <TableLayout       
+    <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stretchColumns="0" >
 
-
-        <TableRow
-            android:background="#666666" >
+        <TableRow android:background="#666666" >
 
             <LinearLayout
                 android:id="@+id/homebtn"
@@ -41,7 +36,6 @@
                 android:layout_marginTop="2dp"
                 android:orientation="horizontal" >
 
-
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -53,12 +47,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:text="What do you want to say?" />
+        android:text="What do you want to say?"
+        android:textColor="#ffffff" />
 
-    <EditText
+   <EditText
         android:maxLength="140"
         android:id="@+id/tweettext"
+        android:gravity="top"
+        android:hint="Enter tweet"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:lines="5"
@@ -69,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/tweetbtnbg"
-        android:text="send" />
+        android:textColor="#ffffff"
+        android:text="Tweet" />
 
 </LinearLayout>

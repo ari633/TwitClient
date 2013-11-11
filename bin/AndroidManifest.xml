@@ -44,7 +44,8 @@
 		<activity android:name=".GroupForm" ></activity>
 		<activity android:name=".GroupUserActivity" ></activity>
 		<activity android:name=".GroupUserForm" ></activity>
-		 
+	 	<activity android:name=".GroupListUser" ></activity>
+		
 		<service android:name=".TimelineService" /> 
         
     </application>

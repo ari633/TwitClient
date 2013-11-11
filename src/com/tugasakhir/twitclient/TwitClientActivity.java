@@ -49,7 +49,7 @@ public class TwitClientActivity extends Activity {
 
 	private void setupTimeline(){
 		//start the progress dialog
-		progressDialog = ProgressDialog.show(TwitClientActivity.this, "", "Loading...");
+		progressDialog = ProgressDialog.show(this, "", "Loading...");
 		
 		new Thread() {
 			public void run() {
@@ -131,7 +131,15 @@ public class TwitClientActivity extends Activity {
 	}
 	
 	
+	public void onResume(){
+		super.onResume();
+		//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
+	}
 	
+	public void onPause(){
+		super.onPause();
+		//stopService(new Intent(this, TimelineService.class));
+	}
 	/*
 	 * When the class is destroyed, close database and service classes
 	 */

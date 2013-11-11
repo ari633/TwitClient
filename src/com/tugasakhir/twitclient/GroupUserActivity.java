@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GroupUserActivity extends Activity implements OnClickListener{
 	
@@ -88,7 +89,7 @@ public class GroupUserActivity extends Activity implements OnClickListener{
 		cGroup.moveToFirst();
 		
 		title = (TextView)findViewById(R.id.title);
-		title.setText(groupModel.getGroupTitle(cGroup)+" Group");
+		title.setText("Timeline "+ groupModel.getGroupTitle(cGroup)+" Group");
 		
 	    LinearLayout homeClicker = (LinearLayout)findViewById(R.id.homebtn);
 	    homeClicker.setOnClickListener(this);		
@@ -97,8 +98,12 @@ public class GroupUserActivity extends Activity implements OnClickListener{
 	    tweetClicker.setOnClickListener(this);	  
 	    
 	    Button add = (Button)findViewById(R.id.add);
+	    Button delete_group = (Button)findViewById(R.id.delete_group);
+	    Button list_user = (Button)findViewById(R.id.list_user);
 	    
 	    add.setOnClickListener(this);
+	    delete_group.setOnClickListener(this);
+	    list_user.setOnClickListener(this);
 	}
 
 	public void onClick(View v) {
@@ -117,6 +122,19 @@ public class GroupUserActivity extends Activity implements OnClickListener{
 			startActivity(i);
 			//startActivity(new Intent(this, GroupUserForm.class));
 		break;
+		
+		case R.id.delete_group:
+			groupModel.deleteGroup(group_ID);
+			Toast.makeText(this, "Delete Group", Toast.LENGTH_LONG).show();
+			finish();
+		break;
+		
+		case R.id.list_user:
+			Intent intent = new Intent(this, GroupListUser.class);
+			intent.putExtra(GroupActivity.ID_EXTRA, group_ID);
+			startActivity(intent);
+			Toast.makeText(this, "List User", Toast.LENGTH_LONG).show();
+			break;
 		
 	}
 	}

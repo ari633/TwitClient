@@ -68,8 +68,7 @@
 	        android:layout_alignBaseline="@+id/retweet"
 	        android:layout_alignBottom="@+id/retweet"
 	        android:layout_alignRight="@+id/updateTime"
-	        android:background="@drawable/updatebtnbg"
-	        android:text="reply"
+	        android:background="@drawable/ic_reply"
 	        android:textColor="#ffffff" />
 
 	    <Button
@@ -79,8 +78,7 @@
 	        android:layout_below="@+id/updateText"
 	        android:layout_marginRight="16dp"
 	        android:layout_toLeftOf="@+id/reply"
-	        android:background="@drawable/updatebtnbg"
-	        android:text="retweet"
+	        android:background="@drawable/ic_retweet"
 	        android:textColor="#ffffff" />
 	    <Button
 	        android:id="@+id/quote"
@@ -89,8 +87,7 @@
 	        android:layout_below="@+id/updateText"
 	        android:layout_marginRight="16dp"
 	        android:layout_toLeftOf="@+id/retweet"
-	        android:background="@drawable/updatebtnbg"
-	        android:text="quote"
+	        android:background="@drawable/ic_quote"
 	        android:textColor="#ffffff" />	    
     	
 </RelativeLayout>
