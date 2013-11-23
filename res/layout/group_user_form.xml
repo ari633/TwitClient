@@ -6,7 +6,7 @@
     
     <TableRow >
         <TextView android:text="User Name "/>
-        <EditText android:id="@+id/username"/>
+        <AutoCompleteTextView android:id="@+id/username"/>
     </TableRow>
     
     

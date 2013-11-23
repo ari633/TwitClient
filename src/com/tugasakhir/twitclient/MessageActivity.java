@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -39,8 +40,8 @@ public class MessageActivity extends Activity{
 		twitPrefs = getSharedPreferences("TwitClientPrefs", 0);
 
 		//get user preferences
-		String userToken = twitPrefs.getString("user_token", null);
-		String userSecret = twitPrefs.getString("user_secret", null);		
+		String userToken = twitPrefs.getString(Const.TOKEN, null);
+		String userSecret = twitPrefs.getString(Const.TOKEN_SECRET, null);		
 		
 		//create new configuration
 		//create new configuration
@@ -57,7 +58,7 @@ public class MessageActivity extends Activity{
 		ArrayList<HashMap<String, String>> messages = new ArrayList<HashMap<String,String>>();
 		//TextView textview = new TextView(this);
 		try {
-			List<DirectMessage> directMessage =  dmTwitter.getSentDirectMessages();
+			List<DirectMessage> directMessage =  dmTwitter.getDirectMessages();
 			
 			for(DirectMessage dm:directMessage){
 				String sender = dm.getSenderScreenName();
@@ -94,6 +95,7 @@ public class MessageActivity extends Activity{
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.e("LIST DM", "Exception: " + e);
 		}
 		
 	}

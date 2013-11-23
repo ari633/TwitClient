@@ -40,8 +40,8 @@ public class DmActivity extends Activity {
 		//get twitter prefs
 		twitPrefs = getSharedPreferences("TwitClientPrefs", 0);
 		//get user preferences
-		String userToken = twitPrefs.getString("user_token", null);
-		String userSecret = twitPrefs.getString("user_secret", null);		
+		String userToken = twitPrefs.getString(Const.TOKEN, "");
+		String userSecret = twitPrefs.getString(Const.TOKEN_SECRET, "");		
 		//create new configuration
 		Configuration twitConf = new ConfigurationBuilder()
 		.setOAuthConsumerKey(Const.TWIT_KEY)

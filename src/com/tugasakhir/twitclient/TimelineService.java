@@ -57,19 +57,18 @@ public class TimelineService extends Service{
 		//get the database
 		twitDB = twitHelper.getWritableDatabase();
 		//get user preferences
-		String userToken = twitPrefs.getString("user_token", null);
-		String userSecret = twitPrefs.getString("user_secret", null);		
+		String userToken = twitPrefs.getString(Const.TOKEN, null);
+		String userSecret = twitPrefs.getString(Const.TOKEN_SECRET, null);		
 		
 		//create new configuration
-		//create new configuration
-	Configuration twitConf = new ConfigurationBuilder()
+		Configuration twitConf = new ConfigurationBuilder()
 		.setOAuthConsumerKey(Const.TWIT_KEY)
 		.setOAuthConsumerSecret(Const.TWIT_SECRET)
 		.setOAuthAccessToken(userToken)
 		.setOAuthAccessTokenSecret(userSecret)
 		.build();
 		//instantiate new twitter
-	timelineTwitter = new TwitterFactory(twitConf).getInstance();
+		timelineTwitter = new TwitterFactory(twitConf).getInstance();
 		
 	}
 	
@@ -148,7 +147,7 @@ public class TimelineService extends Service{
 					for(long id: ids.getIDs()){
 						User user = timelineTwitter.showUser(id);
 						ContentValues followingValues = TwitDataHelper.getValuesFollowing(user);
-						twitDB.insert("following", null, followingValues);
+						twitDB.insertOrThrow("following", null, followingValues);
 					}
 					
 				} while ((cursor = ids.getNextCursor()) != 0);
@@ -307,7 +306,7 @@ public class TimelineService extends Service{
 				}
 				
 			} catch (Exception e) {
-				// TODO: handle exception
+				Log.e("DM_UPDATES", "Exception: " + e);
 			}
 			//if we have new updates, send a broadcast
 			if (statusChanges) 
@@ -340,7 +339,7 @@ public class TimelineService extends Service{
 				}
 				
 			} catch (Exception e) {
-				// TODO: handle exception
+				Log.e("SEND_DM_UPDATES", "Exception: " + e);
 			}
 			//if we have new updates, send a broadcast
 			if (statusChanges) 

@@ -1,6 +1,6 @@
 package com.tugasakhir.twitclient;
 
-
+import com.newrelic.agent.android.NewRelic;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -49,10 +49,14 @@ public class Main extends TabActivity implements OnClickListener {
 				
 		super.onCreate(savedInstanceState);
 		
+		NewRelic.withApplicationToken(
+				"AA00039a769c2cc1596b3e3f99907e4f0fcd7fcd8d"
+				).start(this.getApplication());		
+		
         twitPrefs = getSharedPreferences("TwitClientPrefs", 0); 
         
         //mengetahui apakah preferensi pengguna ditetapkan
-        if(twitPrefs.getString("user_token", null)==null) { 
+        if(twitPrefs.getString(Const.TOKEN, null)==null) { 
         	
         	//Full Screen Activity
             requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -97,7 +101,7 @@ public class Main extends TabActivity implements OnClickListener {
 			//jika button sign in id di tekan
 			case R.id.signin: 
 			//take user to twitter authentication web page to allow app access to their twitter account 
-			String authURL = twitRequestToken.getAuthenticationURL();
+			String authURL = twitRequestToken.getAuthorizationURL();
 			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(authURL)));
 			break;
 			
@@ -142,8 +146,8 @@ public class Main extends TabActivity implements OnClickListener {
 		   	    	AccessToken accToken = twitClient.getOAuthAccessToken(twitRequestToken, oaVerifier);
 		   	    		//add the token and secret to shared prefs for future reference
 		   	        twitPrefs.edit()
-		   	        	.putString("user_token", accToken.getToken())
-		   	            .putString("user_secret", accToken.getTokenSecret())
+		   	        	.putString(Const.TOKEN, accToken.getToken())
+		   	            .putString(Const.TOKEN_SECRET, accToken.getTokenSecret())
 		   	            .commit();
 		    	        //display the timeline
 		   	        	Log.e(LOG_TAG, "Starting Timeline");
@@ -228,6 +232,10 @@ public class Main extends TabActivity implements OnClickListener {
 	        	
 	        	Toast.makeText(this, "Refreshed", Toast.LENGTH_LONG).show();	
 	        return true;
+	        
+	        case R.id.friend_refresh:
+	        	startActivity(new Intent(this, FriendRrefresh.class));
+	        return true;
 	        	
 	        default:
 	        return super.onOptionsItemSelected(item);
@@ -237,8 +245,8 @@ public class Main extends TabActivity implements OnClickListener {
 	public void Logout(){
 		twitPrefs = getSharedPreferences("TwitClientPrefs", 0); 
 		SharedPreferences.Editor editor = twitPrefs.edit();
-		editor.remove("user_token");
-		editor.remove("user_secret");
+		editor.remove(Const.TOKEN);
+		editor.remove(Const.TOKEN_SECRET);
 		editor.commit();
 		
 		timelineHelper = new TwitDataHelper(this);

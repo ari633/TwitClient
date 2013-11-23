@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 public class GroupListUserAdapter extends SimpleCursorAdapter{
 	
-	private Cursor cursor;
 	
 	private GroupDataModel groupModel;
+	private Cursor cursor;
 	static final String[] from = {"user_screen"};
 	static final int[] to = {R.id.user_screen};
 	
@@ -23,7 +23,7 @@ public class GroupListUserAdapter extends SimpleCursorAdapter{
 	}
 
 	
-	public void bindView(View row, Context context, Cursor cursor){
+	public void bindView(View row, Context context, final Cursor cursor){
 		super.bindView(row, context, cursor);
 		
 		//get the user ID
@@ -36,24 +36,45 @@ public class GroupListUserAdapter extends SimpleCursorAdapter{
 		StatusData tag = new StatusData(statusID, statusName, statusText);
 		
 		row.findViewById(R.id.delete).setTag(tag);
-		row.findViewById(R.id.delete).setOnClickListener(userListener);
+		row.findViewById(R.id.delete).setOnClickListener(		
+		new OnClickListener() {
+			
+			public void onClick(View v) {
+				 
+				StatusData tag = (StatusData)v.getTag();
+				switch (v.getId()) {
+				case R.id.delete:
 		
-		
+					groupModel.deleteUserGroup(tag.getID());
+					cursor.requery();
+					
+					
+					Toast.makeText(v.getContext(), "Deleted "+tag.getID(), Toast.LENGTH_LONG).show();	
+					
+					break;
+
+				default:
+					break;
+				}
+				
+			}
+		});
 	}
 		
-	
+
+	/*
 	private OnClickListener userListener = new OnClickListener() {
 
 		
 		
 		public void onClick(View v) {
-						
+			
+			 
 			StatusData tag = (StatusData)v.getTag();
 			switch (v.getId()) {
 			case R.id.delete:
 	
 				groupModel.deleteUserGroup(tag.getID());
-				
 				cursor.requery();
 				
 				
@@ -68,7 +89,7 @@ public class GroupListUserAdapter extends SimpleCursorAdapter{
 		
 	};
 	
-	
+	*/
 
 	
 }

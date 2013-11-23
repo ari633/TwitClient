@@ -8,6 +8,7 @@
          />
 	<uses-permission android:name="android.permission.INTERNET" /> 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />    
     
     <application
         android:icon="@drawable/ic_launcher"
@@ -45,7 +46,9 @@
 		<activity android:name=".GroupUserActivity" ></activity>
 		<activity android:name=".GroupUserForm" ></activity>
 	 	<activity android:name=".GroupListUser" ></activity>
-		
+		<activity android:name=".FriendRrefresh" ></activity>
+	 	
+	 	
 		<service android:name=".TimelineService" /> 
         
     </application>
