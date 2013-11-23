@@ -1,6 +1,7 @@
 package com.tugasakhir.twitclient;
 
 import android.app.Activity;
+import android.app.ActivityGroup;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,7 +16,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase; 
 import android.widget.ListView; 
 
-public class TwitClientActivity extends Activity {
+public class TwitClientActivity extends ActivityGroup {
 	
 
 	//for error logging 
@@ -100,6 +101,8 @@ public class TwitClientActivity extends Activity {
 		}
 		
 	}
+	
+	
 	
 	/**
 	 * Class to implement broadcast receipt for new updates
