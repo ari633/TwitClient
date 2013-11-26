@@ -83,6 +83,10 @@ import android.util.Log;
 	/**Group Users**/
 	private static final String DATABASE_CREATE7 = "CREATE TABLE group_users ("+ ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ ID_GROUP +" INTEGER, "+ USER_COL +" TEXT );";
 	
+	/**Mute User**/
+	private static final String DATABASE_CREATE8 = "CREATE TABLE mute_users (" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ USER_COL +" TEXT );";
+	
+	
 	/**
 	 * Constructor method
 	 * @param context
@@ -105,6 +109,7 @@ import android.util.Log;
     	db.execSQL(DATABASE_CREATE5);
     	db.execSQL(DATABASE_CREATE6);
     	db.execSQL(DATABASE_CREATE7);
+    	db.execSQL(DATABASE_CREATE8);
 	}
     
     /*
@@ -120,6 +125,7 @@ import android.util.Log;
 		db.execSQL("DROP TABLE IF EXISTS following");	
 		db.execSQL("DROP TABLE IF EXISTS groups");	
 		db.execSQL("DROP TABLE IF EXISTS group_users");	
+		db.execSQL("DROP TABLE IF EXISTS mute_users");	
 		onCreate(db);
 	}
 	

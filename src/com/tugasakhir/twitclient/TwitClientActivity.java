@@ -1,8 +1,7 @@
 package com.tugasakhir.twitclient;
 
-import android.app.Activity;
+
 import android.app.ActivityGroup;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,15 +9,18 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 //import twitter4j.ProfileImage; 
 import android.database.Cursor; 
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase; 
+import android.widget.Button;
 import android.widget.ListView; 
 
-public class TwitClientActivity extends ActivityGroup {
+public class TwitClientActivity extends ActivityGroup implements OnClickListener{
 	
-
+	
 	//for error logging 
 	private String LOG_TAG = "TwitClientActivity";//Log
 	
@@ -36,40 +38,24 @@ public class TwitClientActivity extends ActivityGroup {
 	/**broadcast receiver for when new updates are available*/
 	private BroadcastReceiver twitStatusReceiver;
 	
-	private ProgressDialog progressDialog;
-
-	//set gambar profile
-	//ProfileImage.ImageSize imageSize = ProfileImage.NORMAL;	
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);                    
+        super.onCreate(savedInstanceState);     
+        
+        
         setupTimeline();         
     }
 
 
-	private void setupTimeline(){
-		//start the progress dialog
-		progressDialog = ProgressDialog.show(this, "", "Loading...");
-		
-		new Thread() {
-			public void run() {
-			try{
-			sleep(10000);
-			} catch (Exception e) {
-			Log.e("tag", e.getMessage());
-			}
-			// dismiss the progress dialog
-			progressDialog.dismiss();
-
-			}
-		}.start();		
+	private void setupTimeline(){	
 		
 		Log.v(LOG_TAG, "settings up timeline");
 		
 		setContentView(R.layout.timeline);
 		
-	
+        Button btn_group = (Button)findViewById(R.id.group_tl);
+        btn_group.setOnClickListener(this);	
 		
 		try {
 			//get reference to the list view
@@ -79,8 +65,9 @@ public class TwitClientActivity extends ActivityGroup {
 			//get the database
 		timelineDB = timelineHelper.getReadableDatabase();	
 		
-	    //query the database, most recent tweets first
-		timelineCursor = timelineDB.query("home", null, null, null, null, null, "update_time DESC");
+	    //query the database, most recent tweets first except mute user
+		String query = "SELECT * FROM home WHERE user_screen NOT IN "+"(SELECT user_screen FROM mute_users) ORDER BY update_time DESC";
+		timelineCursor = timelineDB.rawQuery(query, null);
 		//manage the updates using a cursor
 		startManagingCursor(timelineCursor);
 	    //instantiate adapter
@@ -103,6 +90,25 @@ public class TwitClientActivity extends ActivityGroup {
 	}
 	
 	
+
+	public void onClick(View v) {
+		
+		switch (v.getId()) {
+		case R.id.group_tl:
+			replaceContentView("TimelineGroup", new Intent(v.getContext(), GroupTimelineActivity.class));	
+			break;
+
+		default:
+			break;
+		}
+		
+	}	
+	
+	public void replaceContentView(String id, Intent newIntent) {
+		
+		View view = getLocalActivityManager().startActivity(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)) .getDecorView(); this.setContentView(view);
+		
+	}	
 	
 	/**
 	 * Class to implement broadcast receipt for new updates
@@ -124,7 +130,10 @@ public class TwitClientActivity extends ActivityGroup {
 								"limit "+rowLimit+")";	
 				timelineDB.execSQL(deleteQuery);
 			}	
-			timelineCursor = timelineDB.query("home", null, null, null, null, null, "update_time DESC");
+			
+			String query = "SELECT * FROM home WHERE user_screen NOT IN "+"(SELECT user_screen FROM mute_users) ORDER BY update_time DESC";
+			timelineCursor = timelineDB.rawQuery(query, null);						
+			
 			startManagingCursor(timelineCursor);
 			timelineAdapter = new UpdateAdapter(context, timelineCursor);
 			homeTimeline.setAdapter(timelineAdapter);			
@@ -160,6 +169,8 @@ public class TwitClientActivity extends ActivityGroup {
 		}
 		catch(Exception se) { Log.e(LOG_TAG, "unable to stop service or receiver"); }
 	}
+
+
 	
 	
 }

@@ -51,7 +51,7 @@ public class MentionActivity extends Activity{
 					
 		Log.v(LOG_TAG, "settings up mentions");
 		
-		setContentView(R.layout.timeline);
+		setContentView(R.layout.mention);
 					
 		try {
 			//get reference to the list view

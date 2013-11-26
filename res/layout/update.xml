@@ -46,6 +46,7 @@
 	        android:textSize="12dip"
 	        android:layout_marginTop="1dip"
 	        android:layout_toRightOf="@+id/listImage"
+	        android:paddingBottom="4dp"
 	        android:text="Just gona stand there and  gona stand there and Just gona stand there and Just gona stand there and..." />	       
     
     <TextView
@@ -60,7 +61,7 @@
         android:textSize="12dip"
         android:textColor="#dddddd"
         android:textStyle="italic"/>
-
+    
 	    <Button
 	        android:id="@+id/reply"
 	        android:layout_width="wrap_content"
@@ -88,6 +89,15 @@
 	        android:layout_marginRight="16dp"
 	        android:layout_toLeftOf="@+id/retweet"
 	        android:background="@drawable/ic_quote"
-	        android:textColor="#ffffff" />	    
+	        android:textColor="#ffffff" />
+
+	    <TextView
+	        android:id="@+id/group"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/updateText"
+	        android:layout_toRightOf="@+id/listImage"
+	        android:textColor="@color/control_two"	        
+	        />
     	
 </RelativeLayout>

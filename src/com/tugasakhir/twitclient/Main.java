@@ -163,6 +163,21 @@ public class Main extends TabActivity implements OnClickListener {
 	
 	
 	public void startTimeLine(){
+		progressDialog = ProgressDialog.show(this, "", "Loading...");
+		
+		new Thread() {
+			public void run() {
+			try{
+			sleep(10000);
+			} catch (Exception e) {
+			Log.e("tag", e.getMessage());
+			}
+			// dismiss the progress dialog
+			progressDialog.dismiss();
+
+			}
+		}.start();	
+		
     	setContentView(R.layout.main);
 		LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
 		tweetClicker.setOnClickListener(this);
@@ -206,6 +221,12 @@ public class Main extends TabActivity implements OnClickListener {
 	        	Intent i = new Intent(this, GroupActivity.class);
 	        	startActivity(i);
 	        	Toast.makeText(this, "Groups", Toast.LENGTH_LONG).show();	      
+	        return true;
+	        
+	        case R.id.mute:	        	
+	        	
+	        	startActivity(new Intent(this, MuteActivity.class));
+	        	
 	        return true;
 	        
 	        case R.id.logout:

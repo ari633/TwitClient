@@ -40,6 +40,7 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	private String LOG_TAG = "UpdateAdapter";
 	
 	public ImageLoader imageLoader;
+	private GroupDataModel groupModel;
 	
 	int loader = R.drawable.ic_launcher;
 	/**
@@ -50,6 +51,10 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	public UpdateAdapter(Context context, Cursor c) {
 		super(context, R.layout.update, c, from, to);
 		imageLoader=new ImageLoader(context.getApplicationContext());
+
+		groupModel = new GroupDataModel(context);
+		groupModel.open();		
+		
 	}
 	
 	/*
@@ -59,33 +64,29 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 	public void bindView(View row, Context context, Cursor cursor){
 		super.bindView(row, context, cursor);
 
-		/*
-		 * In this method we add any additional requirements we have 
-		 * for binding the data to the views
-		 * - we set the image, add tags for data, format the time created and setup click listeners
-		 */
-		
-		/*
-		try 
-		{
-			//get profile image
-			URL profileURL = new URL(cursor.getString(cursor.getColumnIndex("user_img")));
-			//set the image in the view for the current tweet
-			ImageView profPic = (ImageView)row.findViewById(R.id.userImg);
-			profPic.setImageDrawable(Drawable.createFromStream((InputStream)profileURL.getContent(), ""));
-		}
-		catch(Exception te) { Log.e(LOG_TAG, te.getMessage()); }
-		*/
 		String urlImage = cursor.getString(cursor.getColumnIndex("user_img"));
 		ImageView profPic = (ImageView)row.findViewById(R.id.userImg);
 		imageLoader.DisplayImage(urlImage, loader, profPic);
 
 		//get the update time
 		long createdAt = cursor.getLong(cursor.getColumnIndex("update_time"));
+		String user_screen = cursor.getString(cursor.getColumnIndex("user_screen"));
 		//get the update time view
 		TextView textCreatedAt = (TextView) row.findViewById(R.id.updateTime);
 		//adjust the way the time is displayed to make it human-readable
 		textCreatedAt.setText(DateUtils.getRelativeTimeSpanString(createdAt)+" ");
+		
+		String currentActivity  = context.getClass().getName();
+		
+		if(currentActivity.equals("com.tugasakhir.twitclient.GroupTimelineActivity"))
+		{
+			
+			 Cursor cursorGroup  = groupModel.getUserJoinGroup("detikcom");
+			 cursorGroup.moveToFirst();
+						
+			 TextView group = (TextView)row.findViewById(R.id.group);
+			 group.setText(groupModel.getTlGroupName(cursorGroup));
+		}
 
 		/*
 		 * For retweets and replies, we need to store the tweet ID and user screen name in the view

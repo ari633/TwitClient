@@ -38,6 +38,7 @@
 		<activity android:name=".MentionActivity" ></activity>
 		<activity android:name=".FavoriteActivity" ></activity>
 		<activity android:name=".TwitClientActivity" ></activity>
+		<activity android:name=".GroupTimelineActivity" ></activity>
 		<activity android:name=".TimeLineData" ></activity>
 		<activity android:name=".DmActivity" ></activity>
 		<activity android:name=".DmConversationActivity" ></activity>
@@ -47,7 +48,8 @@
 		<activity android:name=".GroupUserForm" ></activity>
 	 	<activity android:name=".GroupListUser" ></activity>
 		<activity android:name=".FriendRrefresh" ></activity>
-	 	
+	 	<activity android:name=".MuteActivity" ></activity>
+	 	<activity android:name=".MuteForm" ></activity>
 	 	
 		<service android:name=".TimelineService" /> 
         

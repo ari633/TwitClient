@@ -58,6 +58,12 @@ public class GroupDataModel{
 		return (db.rawQuery(query, null));
 	}
 	
+	public Cursor getUserJoinGroup(String username){
+		String[] user_screen = {username};
+		final String query = "SELECT id_group, user_screen, title AS group_name FROM group_users JOIN groups ON group_users.id_group = groups._id where group_users.user_screen = ?";
+		return (db.rawQuery(query, user_screen));
+	}
+	
 	public Cursor getUserByName(String username){
 		String[] user_screen = {username};
 		return (db.rawQuery("select _id, id_group, user_screen FROM group_users WHERE user_screen=?", user_screen));
@@ -76,4 +82,7 @@ public class GroupDataModel{
 		return(c.getString(2));
 	}	
 	
+	public String getTlGroupName(Cursor c){
+		return(c.getString(2));
+	}
 }
