@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    
+ <TableLayout       
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0" >
+
+
+        <TableRow
+            android:background="#666666" >
+
+            <LinearLayout
+                android:id="@+id/homebtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="4dp"
+                android:clickable="true"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/home" />                
+            </LinearLayout>
+
+            
+        </TableRow>
+    </TableLayout>
+
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp">
+    
+     <EditText
+         android:id="@+id/query"
+         android:layout_width="250dp"
+         android:layout_height="wrap_content"
+         android:ems="10" />
+
+     <Button
+         android:id="@+id/btnsearch"
+         
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_toRightOf="@+id/query"
+         android:text="Search" />
+     
+</RelativeLayout>
+
+    <ListView
+        android:id="@+id/listSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F3f3f3" 
+        />   
+
+</LinearLayout>

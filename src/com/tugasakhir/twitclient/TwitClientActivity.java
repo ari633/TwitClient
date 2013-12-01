@@ -81,7 +81,7 @@ public class TwitClientActivity extends ActivityGroup implements OnClickListener
 		//register for updates
 	    registerReceiver(twitStatusReceiver, new IntentFilter("TWITTER_UPDATES"));		
 		//start the service for updates now
-		this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
+		//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
 		
 		} catch (Exception te) {
 			Log.e(LOG_TAG, "Failed to fetch timeline: "+te.getMessage());

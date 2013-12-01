@@ -9,6 +9,7 @@
 	<uses-permission android:name="android.permission.INTERNET" /> 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />    
+	<uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     
     <application
         android:icon="@drawable/ic_launcher"
@@ -33,25 +34,28 @@
             
         </activity>
         
-		<activity android:name=".ClientTweet" ></activity> 	
-		<activity android:name=".MessageActivity" ></activity>
-		<activity android:name=".MentionActivity" ></activity>
-		<activity android:name=".FavoriteActivity" ></activity>
-		<activity android:name=".TwitClientActivity" ></activity>
-		<activity android:name=".GroupTimelineActivity" ></activity>
-		<activity android:name=".TimeLineData" ></activity>
-		<activity android:name=".DmActivity" ></activity>
-		<activity android:name=".DmConversationActivity" ></activity>
-		<activity android:name=".GroupActivity" ></activity>
-		<activity android:name=".GroupForm" ></activity>
-		<activity android:name=".GroupUserActivity" ></activity>
-		<activity android:name=".GroupUserForm" ></activity>
-	 	<activity android:name=".GroupListUser" ></activity>
-		<activity android:name=".FriendRrefresh" ></activity>
-	 	<activity android:name=".MuteActivity" ></activity>
-	 	<activity android:name=".MuteForm" ></activity>
+		<activity android:name=".ClientTweet" android:screenOrientation="portrait"></activity> 	
+		<activity android:name=".MessageActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".MentionActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".FavoriteActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".TwitClientActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".GroupTimelineActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".TimeLineData" android:screenOrientation="portrait"></activity>
+		<activity android:name=".DmActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".DmConversationActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".GroupActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".GroupForm" android:screenOrientation="portrait"></activity>
+		<activity android:name=".GroupUserActivity" android:screenOrientation="portrait"></activity>
+		<activity android:name=".GroupUserForm" android:screenOrientation="portrait"></activity>
+	 	<activity android:name=".GroupListUser" android:screenOrientation="portrait"></activity>
+		<activity android:name=".FriendRrefresh" android:screenOrientation="portrait"></activity>
+	 	<activity android:name=".MuteActivity" android:screenOrientation="portrait"></activity>
+	 	<activity android:name=".MuteForm" android:screenOrientation="portrait"></activity>
+	 	<activity android:name=".SearchActivity" android:screenOrientation="portrait"></activity>
 	 	
 		<service android:name=".TimelineService" /> 
+		
+		<receiver android:name=".ScheduleReciever"/> 
         
     </application>
 

@@ -36,7 +36,8 @@ import android.util.Log;
 	private static final String TIME_COL = "update_time";
 		/**user profile image*/
 	private static final String USER_IMG = "user_img";
-		/**Timeline Type e.g. Home timeline, Mention timeline*/
+	
+	private static final String TEXT_TWEET = "text_tweet";
 	
 	
 	
@@ -86,6 +87,9 @@ import android.util.Log;
 	/**Mute User**/
 	private static final String DATABASE_CREATE8 = "CREATE TABLE mute_users (" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ USER_COL +" TEXT );";
 	
+	/**schedule tweet**/
+	private static final String DATABASE_CREATE9 = "CREATE TABLE schedule_tweet (" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+TEXT_TWEET+" TEXT, "+ TIME_COL +" INTEGER );";
+	
 	
 	/**
 	 * Constructor method
@@ -110,6 +114,7 @@ import android.util.Log;
     	db.execSQL(DATABASE_CREATE6);
     	db.execSQL(DATABASE_CREATE7);
     	db.execSQL(DATABASE_CREATE8);
+    	db.execSQL(DATABASE_CREATE9);
 	}
     
     /*
@@ -126,6 +131,7 @@ import android.util.Log;
 		db.execSQL("DROP TABLE IF EXISTS groups");	
 		db.execSQL("DROP TABLE IF EXISTS group_users");	
 		db.execSQL("DROP TABLE IF EXISTS mute_users");	
+		db.execSQL("DROP TABLE IF EXISTS schedule_tweet");	
 		onCreate(db);
 	}
 	

@@ -81,7 +81,7 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 		if(currentActivity.equals("com.tugasakhir.twitclient.GroupTimelineActivity"))
 		{
 			
-			 Cursor cursorGroup  = groupModel.getUserJoinGroup("detikcom");
+			 Cursor cursorGroup  = groupModel.getUserJoinGroup(user_screen);
 			 cursorGroup.moveToFirst();
 						
 			 TextView group = (TextView)row.findViewById(R.id.group);
@@ -155,8 +155,8 @@ public class UpdateAdapter extends SimpleCursorAdapter{
 				Context appCont = v.getContext();
 				//get preferences for user access
 				SharedPreferences tweetPrefs = appCont.getSharedPreferences("TwitClientPrefs", 0);
-				String userToken = tweetPrefs.getString("user_token", null);
-				String userSecret = tweetPrefs.getString("user_secret", null);
+				String userToken = tweetPrefs.getString(Const.TOKEN, null);
+				String userSecret = tweetPrefs.getString(Const.TOKEN_SECRET, null);
 				//create new Twitter configuration
 				Configuration twitConf = new ConfigurationBuilder()
 				.setOAuthConsumerKey(Const.TWIT_KEY)

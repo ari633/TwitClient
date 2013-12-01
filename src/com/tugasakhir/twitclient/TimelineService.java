@@ -42,7 +42,7 @@ public class TimelineService extends Service{
 	private MessageUpdapter messageUpdater;
 	private SendMessageUpdapter sendMessageUpdater;
 	/*delay between fethcing  new tweets*/
-	private static int mins = 7;
+	private static int mins = 1;
 	private static final long FETCH_DELAY = mins * (60*1000);
 	//debugging tag
 	private String LOG_TAG = "TimelineService";

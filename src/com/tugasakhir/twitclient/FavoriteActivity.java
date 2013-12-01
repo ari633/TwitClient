@@ -51,7 +51,7 @@ public class FavoriteActivity extends Activity{
 	private void setupFavorite(){ 				
 		Log.v(LOG_TAG, "settings up favorite");
 		
-		setContentView(R.layout.timeline);
+		setContentView(R.layout.timelinegeneral);
 					
 		try {
 			//get reference to the list view

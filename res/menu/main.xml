@@ -6,10 +6,13 @@
         android:title="@string/menu_groups"/>  
         
     <item android:id="@+id/mute"
-        android:title="Mute User"/>       
+        android:title="Mute User"/>  
+             
+    <item android:id="@+id/search"
+        android:title="Search"/>         
                  
-    <item android:id="@+id/settings"
-        android:title="@string/menu_settings"/>
+    <item android:id="@+id/favorite"
+        android:title="Favorite"/>
     
     <item android:id="@+id/logout"
         android:title="@string/menu_logout"/>

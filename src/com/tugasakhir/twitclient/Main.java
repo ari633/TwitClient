@@ -213,8 +213,8 @@ public class Main extends TabActivity implements OnClickListener {
 	    	
 	        switch (item.getItemId()) {	       
 	        
-	        case R.id.settings:
-	        	Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show();	        	
+	        case R.id.favorite:
+	        	startActivity(new Intent(this, FavoriteActivity.class));    	
 	        return true;
 	        
 	        case R.id.groups:
@@ -228,6 +228,13 @@ public class Main extends TabActivity implements OnClickListener {
 	        	startActivity(new Intent(this, MuteActivity.class));
 	        	
 	        return true;
+	        
+	        
+	        case R.id.search:	        	
+	        	
+	        	startActivity(new Intent(this, SearchActivity.class));
+	        	
+	        return true;	        
 	        
 	        case R.id.logout:
 	        	  Logout();
@@ -247,7 +254,7 @@ public class Main extends TabActivity implements OnClickListener {
 	    			progressDialog.dismiss();
 
 	    			}
-	    		}.start();	
+	    		}.start();
 	    		
 	        	this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
 	        	
@@ -282,9 +289,9 @@ public class Main extends TabActivity implements OnClickListener {
 		//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
 	}
 	
-	public void onPause(){
+	public void onDestroy(){
 		super.onPause();
-		//stopService(new Intent(this, TimelineService.class));
+		stopService(new Intent(this, TimelineService.class));
 	}
 	
 	

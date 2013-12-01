@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#333333"
@@ -7,6 +7,7 @@
     android:paddingBottom="5dp" >
 
     <TableLayout
+        android:id="@+id/tableLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:stretchColumns="0" >
@@ -45,27 +46,78 @@
     </TableLayout>
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tableLayout1"
         android:text="What do you want to say?"
         android:textColor="#ffffff" />
 
-   <EditText
-        android:maxLength="140"
+    <EditText
         android:id="@+id/tweettext"
-        android:gravity="top"
-        android:hint="Enter tweet"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="Enter tweet"
         android:lines="5"
-        android:singleLine="false" />
+        android:maxLength="140"
+        android:singleLine="false" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/dotweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tweettext"
         android:background="@drawable/tweetbtnbg"
+        android:text="Tweet"
         android:textColor="#ffffff"
-        android:text="Tweet" />
+        android:textStyle="bold" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btnSelectTime"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/dotweet"
+        android:layout_alignBottom="@+id/dotweet"
+        android:layout_alignParentLeft="true"
+        android:text="Time" />
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dotweet"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/btnSelectTime"
+        android:text=""
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textTime"
+        android:layout_alignBottom="@+id/textTime"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/textTime"
+        android:text=""
+        android:textColor="#ffffff" />
+    
+	<EditText  
+	    android:id="@+id/unixTime"
+		android:layout_width="wrap_content"	
+		android:layout_height="wrap_content"
+		android:inputType="number"    
+	    android:visibility="invisible"/>
+    
+</RelativeLayout>
