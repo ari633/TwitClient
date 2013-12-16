@@ -2,6 +2,7 @@ package com.tugasakhir.twitclient;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,9 +15,14 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 public class GroupUserForm extends Activity implements OnClickListener{
 	
@@ -26,11 +32,28 @@ public class GroupUserForm extends Activity implements OnClickListener{
 	private TwitDataHelper twitDataHelper;
 	private SQLiteDatabase db;
 	
+	private Twitter twitter;
+	private SharedPreferences twitPrefs;
+	
 	private long group_ID = 0;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.group_user_form);
+		
+		twitPrefs = getSharedPreferences("TwitClientPrefs", 0);
+		//get user preferences
+		String userToken = twitPrefs.getString(Const.TOKEN, null);
+		String userSecret = twitPrefs.getString(Const.TOKEN_SECRET, null);
+		
+		Configuration twitConf = new ConfigurationBuilder()
+		.setOAuthConsumerKey(Const.TWIT_KEY)
+		.setOAuthConsumerSecret(Const.TWIT_SECRET)
+		.setOAuthAccessToken(userToken)
+		.setOAuthAccessTokenSecret(userSecret)
+		.build();
+		
+		twitter = new TwitterFactory(twitConf).getInstance();
 		
 		
 		groupModel = new GroupDataModel(this);
@@ -59,13 +82,25 @@ public class GroupUserForm extends Activity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.save:
 			
-				Cursor c = groupModel.getUserByName(username.getText().toString());
+				String user_screen = username.getText().toString();
+				Cursor c = groupModel.getUserByName(user_screen);
 				c.moveToFirst();
 				
 				if(c.getCount() == 0){
 					
-					groupModel.insertUser(username.getText().toString(), group_ID);				
-					Toast.makeText(this, "Group Saved", Toast.LENGTH_LONG).show();	
+					try {
+						User user = twitter.showUser(user_screen);
+						String usr_img = user.getProfileImageURL().toString();
+						
+						groupModel.insertUser(username.getText().toString(), group_ID, usr_img);				
+						Toast.makeText(this, "Group Saved", Toast.LENGTH_LONG).show();	
+						
+					} catch (TwitterException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						
+					}
+
 					
 					finish();
 					

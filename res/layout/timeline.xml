@@ -6,21 +6,10 @@
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:padding="4dp">
                 
-        <Button
-            android:id="@+id/all_tl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_active_style"
-            android:text="All Timeline" />
-                
-        
-        <Button
-        android:id="@+id/group_tl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_style"
-        android:layout_alignParentRight="true"
-        android:text="Group Timeline" />
+<Spinner android:id="@+id/spinner"
+			             android:layout_width="250dp"
+			             android:layout_height="40dp"
+			             />    
 
         
     </RelativeLayout>

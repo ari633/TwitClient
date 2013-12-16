@@ -53,7 +53,7 @@ public class GroupActivity extends Activity implements OnClickListener{
         // Click event for single list row
         list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {			
-				Intent i = new Intent(view.getContext(), GroupUserActivity.class);
+				Intent i = new Intent(view.getContext(), GroupListUser.class);
 				i.putExtra(ID_EXTRA, id);
 				view.getContext().startActivity(i);
 				//Toast.makeText(getApplicationContext(), "Click ListItem "+ id, Toast.LENGTH_LONG).show();

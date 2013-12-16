@@ -82,10 +82,10 @@ import android.util.Log;
 	private static final String DATABASE_CREATE6 = "CREATE TABLE groups ("+ ID_COL +" INTEGER PRIMARY KEY AUTOINCREMENT, "+ GROUP_TITLE +"  TEXT );";
 	
 	/**Group Users**/
-	private static final String DATABASE_CREATE7 = "CREATE TABLE group_users ("+ ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ ID_GROUP +" INTEGER, "+ USER_COL +" TEXT );";
+	private static final String DATABASE_CREATE7 = "CREATE TABLE group_users ("+ ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ ID_GROUP +" INTEGER, "+ USER_COL +" TEXT, " + USER_IMG + " TEXT );";
 	
 	/**Mute User**/
-	private static final String DATABASE_CREATE8 = "CREATE TABLE mute_users (" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ USER_COL +" TEXT );";
+	private static final String DATABASE_CREATE8 = "CREATE TABLE mute_users (" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ USER_COL +" TEXT, " + USER_IMG + " TEXT );";
 	
 	/**schedule tweet**/
 	private static final String DATABASE_CREATE9 = "CREATE TABLE schedule_tweet (" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "+TEXT_TWEET+" TEXT, "+ TIME_COL +" INTEGER );";

@@ -4,8 +4,41 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/list_selector" android:padding="4dp" android:layout_marginBottom="4dp">
-        <TextView android:id="@+id/heading" android:text="Users Group" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="14sp" android:textStyle="bold"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/list_selector"
+        android:padding="4dp" >
+                
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_style"
+            android:layout_alignParentRight="true"
+            android:text="Add User" />
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/add"
+            android:layout_alignBottom="@+id/add"
+            android:layout_alignParentLeft="true"
+            android:text="Users Group"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/delete_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/add"
+            android:background="@drawable/button_style"
+            android:text="Delete" />
+        
     </RelativeLayout>    
     
 <ListView android:id="@+id/list"   

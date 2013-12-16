@@ -1,24 +1,29 @@
 package com.tugasakhir.twitclient;
 
 
-import android.app.ActivityGroup;
+import java.util.List;
+
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.support.v4.content.CursorLoader;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-//import twitter4j.ProfileImage; 
 import android.database.Cursor; 
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase; 
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView; 
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class TwitClientActivity extends ActivityGroup implements OnClickListener{
+public class TwitClientActivity extends Activity{
 	
 	
 	//for error logging 
@@ -38,13 +43,28 @@ public class TwitClientActivity extends ActivityGroup implements OnClickListener
 	/**broadcast receiver for when new updates are available*/
 	private BroadcastReceiver twitStatusReceiver;
 	
+	private GroupDataModel groupModel;	
+	private Spinner spinner;
+	private String query;
 
+	private List<String> labels;
+	private ArrayAdapter<String> spinnerAdapter;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);     
         
+		//instantiate database helper
+		timelineHelper = new TwitDataHelper(this);
+			//get the database
+		timelineDB = timelineHelper.getReadableDatabase();
+		
+		groupModel = new GroupDataModel(this);
+		groupModel.open();
+		
+        setupTimeline();  
         
-        setupTimeline();         
+        this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
     }
 
 
@@ -53,62 +73,83 @@ public class TwitClientActivity extends ActivityGroup implements OnClickListener
 		Log.v(LOG_TAG, "settings up timeline");
 		
 		setContentView(R.layout.timeline);
-		
-        Button btn_group = (Button)findViewById(R.id.group_tl);
-        btn_group.setOnClickListener(this);	
-		
-		try {
-			//get reference to the list view
 		homeTimeline = (ListView)findViewById(R.id.homeList);
-			//instantiate database helper
-		timelineHelper = new TwitDataHelper(this);
-			//get the database
-		timelineDB = timelineHelper.getReadableDatabase();	
+        
+		spinner = (Spinner) findViewById(R.id.spinner);
 		
-	    //query the database, most recent tweets first except mute user
-		String query = "SELECT * FROM home WHERE user_screen NOT IN "+"(SELECT user_screen FROM mute_users) ORDER BY update_time DESC";
-		timelineCursor = timelineDB.rawQuery(query, null);
-		//manage the updates using a cursor
-		startManagingCursor(timelineCursor);
-	    //instantiate adapter
-		timelineAdapter = new UpdateAdapter(this, timelineCursor);
+		loadSpinnerData();
+	    
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				String label = parent.getItemAtPosition(position).toString();
+				
+				if(label.equals("All Timeline")){					
+					query = "SELECT * FROM home WHERE user_screen  NOT IN (SELECT user_screen FROM mute_users) ORDER BY update_time DESC";					
+				}else{
+					Cursor cGroup = groupModel.getBytitle(label);
+					cGroup.moveToFirst();
+					
+					String idGroup = groupModel.getGroupId(cGroup);
+					
+					query = "SELECT * FROM home WHERE user_screen  IN (SELECT user_screen FROM group_users WHERE id_group = "+ idGroup +" ORDER BY _id DESC) ORDER BY update_time DESC";										
+				}
+				
+				try {
+					
+				    //query the database, most recent tweets first except mute user
+					
+					timelineCursor = timelineDB.rawQuery(query, null);		
+					//manage the updates using a cursor
+					startManagingCursor(timelineCursor);
+				    //instantiate adapter
+					timelineAdapter = new UpdateAdapter(parent.getContext(), timelineCursor);
+					
+					//apply the adapter to the timeline view
+					//this will make it populate the new update data in the view
+					homeTimeline.setAdapter(timelineAdapter);
+					//instantiate receiver class for finding out when new updates are available
+					twitStatusReceiver = new TwitterUpdateReceiver();
+					//register for updates
+				    registerReceiver(twitStatusReceiver, new IntentFilter("TWITTER_UPDATES"));		
+					//start the service for updates now
+					//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
+					
+					} catch (Exception te) {
+						Log.e(LOG_TAG, "Failed to fetch timeline: "+te.getMessage());
+					}				
+				
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});     
 		
-		//apply the adapter to the timeline view
-		//this will make it populate the new update data in the view
-		homeTimeline.setAdapter(timelineAdapter);
-		//instantiate receiver class for finding out when new updates are available
-		twitStatusReceiver = new TwitterUpdateReceiver();
-		//register for updates
-	    registerReceiver(twitStatusReceiver, new IntentFilter("TWITTER_UPDATES"));		
-		//start the service for updates now
-		//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
-		
-		} catch (Exception te) {
-			Log.e(LOG_TAG, "Failed to fetch timeline: "+te.getMessage());
-		}
+        
+
 		
 	}
 	
 	
-
-	public void onClick(View v) {
+	private void loadSpinnerData(){
 		
-		switch (v.getId()) {
-		case R.id.group_tl:
-			replaceContentView("TimelineGroup", new Intent(v.getContext(), GroupTimelineActivity.class));	
-			break;
-
-		default:
-			break;
-		}
+		labels = groupModel.getAllLabelGroups();
 		
-	}	
-	
-	public void replaceContentView(String id, Intent newIntent) {
+	    spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
+		spinnerAdapter.notifyDataSetChanged();
 		
-		View view = getLocalActivityManager().startActivity(id,newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)) .getDecorView(); this.setContentView(view);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+				
+		
+	    spinner.setAdapter(spinnerAdapter);
 		
 	}	
+
+
 	
 	/**
 	 * Class to implement broadcast receipt for new updates
@@ -145,12 +186,15 @@ public class TwitClientActivity extends ActivityGroup implements OnClickListener
 	
 	public void onResume(){
 		super.onResume();
+		labels.clear();
+		labels.addAll(groupModel.getAllLabelGroups());
+		spinnerAdapter.notifyDataSetChanged();
 		//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
 	}
 	
 	public void onPause(){
 		super.onPause();
-		//stopService(new Intent(this, TimelineService.class));
+		stopService(new Intent(this, TimelineService.class));
 	}
 	/*
 	 * When the class is destroyed, close database and service classes

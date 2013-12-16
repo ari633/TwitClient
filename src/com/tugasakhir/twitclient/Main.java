@@ -178,6 +178,8 @@ public class Main extends TabActivity implements OnClickListener {
 			}
 		}.start();	
 		
+		
+		
     	setContentView(R.layout.main);
 		LinearLayout tweetClicker = (LinearLayout)findViewById(R.id.tweetbtn);
 		tweetClicker.setOnClickListener(this);
@@ -291,8 +293,11 @@ public class Main extends TabActivity implements OnClickListener {
 	
 	public void onDestroy(){
 		super.onPause();
-		stopService(new Intent(this, TimelineService.class));
+		//stopService(new Intent(this, TimelineService.class));
 	}
+	
+	
+	
 	
 	
 }
