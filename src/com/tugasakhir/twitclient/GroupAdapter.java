@@ -23,11 +23,6 @@ public class GroupAdapter extends SimpleCursorAdapter{
 	
 	public void bindView(View row, Context context, Cursor cursor){
 		super.bindView(row, context, cursor);
-				
-		TextView total = (TextView)row.findViewById(R.id.total);
-		total.setText("Total User");
-
-		
 		
 	}
 	

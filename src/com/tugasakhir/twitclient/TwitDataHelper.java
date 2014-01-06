@@ -245,6 +245,7 @@ import android.util.Log;
 	public void removeAll(){	
 		Log.v("TwitDataHelper", "delete tweet data");
 		db = getWritableDatabase();
+		
 		db.delete("home", null, null);
 		db.delete("mentions", null, null);
 		db.delete("favorite", null, null);
@@ -252,6 +253,9 @@ import android.util.Log;
 		db.delete("following", null, null);
 		db.delete("groups", null, null);
 		db.delete("group_users", null, null);
+		
+		
+		db.close();
 	}
 	
 }

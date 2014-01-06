@@ -1,15 +1,14 @@
 package com.tugasakhir.twitclient;
 
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.User;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,22 +19,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MuteForm extends Activity implements OnClickListener{
+public class DmComposeActivity extends Activity implements OnClickListener{
 	
-	private MuteDataModel muteModel;
 	private TwitDataHelper twitDataHelper;
 	private SQLiteDatabase db;
 	
 	private AutoCompleteTextView username;
 
 	private Twitter twitter;
-	private SharedPreferences twitPrefs;	
+	private SharedPreferences twitPrefs;		
 	
+	private EditText textMessage;
+	private String user_screen;
 	
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.group_user_form);
-
+		setContentView(R.layout.dm_compose);
+		
 		twitPrefs = getSharedPreferences("TwitClientPrefs", 0);
 		//get user preferences
 		String userToken = twitPrefs.getString(Const.TOKEN, null);
@@ -50,23 +50,62 @@ public class MuteForm extends Activity implements OnClickListener{
 		
 		twitter = new TwitterFactory(twitConf).getInstance();		
 		
-		muteModel = new MuteDataModel(this);
-		muteModel.open();
 		
 		username = (AutoCompleteTextView)findViewById(R.id.username);
 		
 		String[] friends  = getAllFriends();
+	      // Print out the values to the log
         for(int i = 0; i < friends.length; i++)
         {
             Log.v(this.toString(), friends[i]);
         }		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friends);
-		username.setAdapter(adapter);
+		username.setAdapter(adapter);	
 		
-		Button save = (Button)findViewById(R.id.save);
+		textMessage = (EditText)findViewById(R.id.composedm);
+	    	
+		Button save = (Button)findViewById(R.id.send);
 		save.setOnClickListener(this);
 		
+		
 	}
+	
+	
+	
+	public void onClick(View v) {
+		
+		user_screen = username.getText().toString();
+		switch (v.getId()) {
+			case R.id.send:
+			
+		
+				try {
+					twitter.sendDirectMessage(user_screen, textMessage.getText().toString());
+					
+					Toast.makeText(v.getContext(), "Direct Message sent to "+user_screen , Toast.LENGTH_SHORT).show();
+					textMessage.setText("");
+					
+					finish();
+									
+				} catch (TwitterException e) {
+					Log.e("SEND_DM", "gagal ngirim DM: "+e.getMessage());
+					
+					if(user_screen.trim().equals("")){			
+						username.setError("Username cannot be blank.");
+					}
+					
+					if(textMessage.getText().toString().trim().equals("")){
+						textMessage.setError("Text Message cannot blank");
+					}
+					
+				}
+				
+			break;
+		}
+		
+		
+	}
+	
 	
 	
 	public String[] getAllFriends(){
@@ -87,45 +126,6 @@ public class MuteForm extends Activity implements OnClickListener{
         }else{
         	return new String[] {};
         }
-	}
-
-
-	public void onClick(View v) {
-		switch (v.getId()) {
-			
-		case R.id.save:
-			
-			String user_screen  = username.getText().toString();
-			
-			Cursor c = muteModel.getUserByName(user_screen);
-			
-			if(c.getCount() == 0){
-				
-				
-				try {
-					User user = twitter.showUser(user_screen);
-					String usr_img = user.getProfileImageURL().toString();
-					
-					muteModel.insert(user_screen, usr_img);
-					
-				} catch (Exception e) {
-					
-				}
-				
-				finish();
-			}else{
-				Toast.makeText(this, "User Already Exist", Toast.LENGTH_LONG).show();	
-			}
-			
-			
-			break;
-			
-		default:
-			break;			
-		
-		}
-		
 	}	
 	
-
 }

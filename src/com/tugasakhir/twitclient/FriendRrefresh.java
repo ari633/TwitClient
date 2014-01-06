@@ -74,14 +74,7 @@ public class FriendRrefresh extends Activity{
 			setContentView(R.layout.friend_refresh);
 	}
 	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();	
-		//Runnable friends = new FriendsUpdater();
-		//new Thread(friends).stop();
-		//twitHandler.removeCallbacks(friends);
-			
-	}
+
 	
 	public void startProgress(View v) {
 		twitDB = twitHelper.getWritableDatabase();
@@ -162,7 +155,7 @@ public class FriendRrefresh extends Activity{
 					}
 					
 				} while ((cursor = ids.getNextCursor()) != 0);
-				
+				twitDB.close();
 			} catch (Exception e) {
 				Log.e("Refreshed Friends", "Exception: " + e);
 			}
@@ -171,7 +164,15 @@ public class FriendRrefresh extends Activity{
 	}
 	
 
-	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();	
+		twitDB.close();
+		//Runnable friends = new FriendsUpdater();
+		//new Thread(friends).stop();
+		//twitHandler.removeCallbacks(friends);
+			
+	}
 	
 
 }

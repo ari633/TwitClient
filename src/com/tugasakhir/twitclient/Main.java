@@ -168,7 +168,7 @@ public class Main extends TabActivity implements OnClickListener {
 		new Thread() {
 			public void run() {
 			try{
-			sleep(10000);
+			sleep(1000);
 			} catch (Exception e) {
 			Log.e("tag", e.getMessage());
 			}
@@ -177,7 +177,6 @@ public class Main extends TabActivity implements OnClickListener {
 
 			}
 		}.start();	
-		
 		
 		
     	setContentView(R.layout.main);
@@ -248,7 +247,7 @@ public class Main extends TabActivity implements OnClickListener {
 	    		new Thread() {
 	    			public void run() {
 	    			try{
-	    			sleep(5000);
+	    			sleep(1000);
 	    			} catch (Exception e) {
 	    			Log.e("tag", e.getMessage());
 	    			}

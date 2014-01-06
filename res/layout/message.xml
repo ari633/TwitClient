@@ -3,13 +3,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:padding="4dp"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/compose"
+            android:background="@drawable/button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compose" />
+
+    </RelativeLayout>
     
     <ListView
         android:id="@+id/messageList"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#F3f3f3" 
-        />    
-    
+        android:layout_height="440dp"
+        android:background="#F3f3f3" />
 
 </LinearLayout>

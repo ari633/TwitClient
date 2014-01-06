@@ -33,12 +33,13 @@ public class MuteDataModel {
 	
 	public Cursor getUserByName(String username){
 		String[] user_screen = {username};
-		return (db.rawQuery("select _id, user_screen FROM mute_users WHERE user_screen=?", user_screen));
+		return (db.rawQuery("select _id, user_screen, user_img FROM mute_users WHERE user_screen=?", user_screen));
 	}
 	
-	public void insert(String username){
+	public void insert(String username, String user_img){
 		ContentValues cv = new ContentValues();
 		cv.put("user_screen", username);	
+		cv.put("user_img", user_img);
 		db.insert("mute_users", null, cv);
 	}
 	

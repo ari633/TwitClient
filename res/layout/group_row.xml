@@ -8,25 +8,17 @@
     
 
 <TextView
-	        android:id="@+id/title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignTop="@+id/thumbnail"
-	        android:layout_toRightOf="@+id/thumbnail"
-	        android:textColor="#040404"
-	        android:typeface="sans"
-	        android:textSize="15dip"
-	        android:textStyle="bold"/> 
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:textColor="#040404"
+                android:typeface="sans"
+                android:textSize="15dip"
+                android:textStyle="bold"/> 
+                
+           
+   
 	        
-	   
-<TextView
-	        android:id="@+id/total"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/title"
-	        android:textColor="#343434"
-	        android:textSize="9dip"
-	        android:layout_marginTop="1dip"
-	        android:text="99 Users" />	
+
 
 </RelativeLayout>

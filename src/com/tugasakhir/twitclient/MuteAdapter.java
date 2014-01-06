@@ -1,10 +1,13 @@
 package com.tugasakhir.twitclient;
 
+import com.library.imageloader.ImageLoader;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
@@ -12,6 +15,9 @@ public class MuteAdapter extends SimpleCursorAdapter{
 
 	
 	private MuteDataModel muteModel;
+
+	public ImageLoader imageLoader;
+	int loader = R.drawable.ic_launcher;	
 	
 	static final String[] from = {"user_screen"};
 	static final int[] to = {R.id.user_screen};	
@@ -19,7 +25,7 @@ public class MuteAdapter extends SimpleCursorAdapter{
 	public MuteAdapter(Context context, Cursor c) {
 		
 		super(context, R.layout.group_list_user_row, c, from, to);
-		
+		imageLoader=new ImageLoader(context.getApplicationContext());
 		muteModel = new MuteDataModel(context);
 		muteModel.open();
 		
@@ -35,6 +41,11 @@ public class MuteAdapter extends SimpleCursorAdapter{
 		String statusText = null;
 		
 		StatusData tag = new StatusData(statusID, username, statusText);
+		
+		String userImage = cursor.getString(cursor.getColumnIndex("user_img"));
+		
+		ImageView profPic = (ImageView)row.findViewById(R.id.avatar);
+		imageLoader.DisplayImage(userImage, loader, profPic);
 		
 		row.findViewById(R.id.delete).setTag(tag);
 		row.findViewById(R.id.delete).setOnClickListener(		

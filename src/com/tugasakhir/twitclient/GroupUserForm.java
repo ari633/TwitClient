@@ -101,7 +101,7 @@ public class GroupUserForm extends Activity implements OnClickListener{
 						
 					}
 
-					
+					groupModel.close();
 					finish();
 					
 				}else{
@@ -132,8 +132,10 @@ public class GroupUserForm extends Activity implements OnClickListener{
                  str[i] = cursor.getString(cursor.getColumnIndex("user_screen"));
                  i++;
              }
+            db.close();
             return str;
         }else{
+        	 db.close();
         	return new String[] {};
         }
 	}
@@ -160,8 +162,7 @@ public class GroupUserForm extends Activity implements OnClickListener{
 	 }	
 	
 	protected void onResume() {
-		  super.onResume();
-		  groupModel.open(); 		  		  
+		  super.onResume();		  		  
 	}		
 	
 	protected void onDestroy(){

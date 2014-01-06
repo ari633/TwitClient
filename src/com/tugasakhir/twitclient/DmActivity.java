@@ -16,9 +16,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
-public class DmActivity extends Activity {
+public class DmActivity extends Activity implements OnClickListener{
 
 	private String LOG_TAG = "DmActivity";
 	private Twitter dmTwitter;
@@ -37,6 +40,8 @@ public class DmActivity extends Activity {
 		Log.v(LOG_TAG, "settings up DM");
 		setContentView(R.layout.message);
 		
+	    Button add = (Button)findViewById(R.id.compose);
+	    add.setOnClickListener(this);		
 		//get twitter prefs
 		twitPrefs = getSharedPreferences("TwitClientPrefs", 0);
 		//get user preferences
@@ -99,6 +104,18 @@ public class DmActivity extends Activity {
 		
 	}
 	
+
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {	
+		
+		case R.id.compose:
+			startActivity(new Intent(this, DmComposeActivity.class));			
+		break;
+		
+		}
+	}		
+	
 	/*
 	 * When the class is destroyed, close database and service classes
 	 */
@@ -112,6 +129,7 @@ public class DmActivity extends Activity {
 			dmDB.close();
 		}
 		catch(Exception se) { Log.e(LOG_TAG, "unable to stop service or receiver"); }
-	}	
+	}
+
 	
 }

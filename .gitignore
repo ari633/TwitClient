@@ -1,4 +1,4 @@
-src/com/tugasakhir/twitclient/Const.java
+/src/com/tugasakhir/twitclient/Const.java
 
 # files for the dex VM
 *.dex
@@ -7,8 +7,8 @@ src/com/tugasakhir/twitclient/Const.java
 *.class
 
 # generated files
-bin/
-gen/
+/bin/
+/gen/
 
 # Local configuration file (sdk path, etc)
 local.properties

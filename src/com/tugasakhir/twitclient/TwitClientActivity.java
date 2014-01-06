@@ -63,7 +63,6 @@ public class TwitClientActivity extends Activity{
 		groupModel.open();
 		
         setupTimeline();  
-        
         this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
     }
 
@@ -114,7 +113,7 @@ public class TwitClientActivity extends Activity{
 					//register for updates
 				    registerReceiver(twitStatusReceiver, new IntentFilter("TWITTER_UPDATES"));		
 					//start the service for updates now
-					//this.getApplicationContext().startService(new Intent(this.getApplicationContext(), TimelineService.class));
+				    
 					
 					} catch (Exception te) {
 						Log.e(LOG_TAG, "Failed to fetch timeline: "+te.getMessage());
@@ -194,7 +193,7 @@ public class TwitClientActivity extends Activity{
 	
 	public void onPause(){
 		super.onPause();
-		stopService(new Intent(this, TimelineService.class));
+		//stopService(new Intent(this, TimelineService.class));
 	}
 	/*
 	 * When the class is destroyed, close database and service classes
@@ -205,7 +204,7 @@ public class TwitClientActivity extends Activity{
 		try 
 		{
 			//stop the updater service
-			stopService(new Intent(this, TimelineService.class));
+			//stopService(new Intent(this, TimelineService.class));
 			//remove receiver register
 			unregisterReceiver(twitStatusReceiver);
 			//close the database
