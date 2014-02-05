@@ -49,9 +49,9 @@ public class Main extends TabActivity implements OnClickListener {
 				
 		super.onCreate(savedInstanceState);
 		
-		NewRelic.withApplicationToken(
+		/*NewRelic.withApplicationToken(
 				"AA00039a769c2cc1596b3e3f99907e4f0fcd7fcd8d"
-				).start(this.getApplication());		
+				).start(this.getApplication());*/		
 		
         twitPrefs = getSharedPreferences("TwitClientPrefs", 0); 
         
@@ -277,6 +277,7 @@ public class Main extends TabActivity implements OnClickListener {
 		editor.remove(Const.TOKEN);
 		editor.remove(Const.TOKEN_SECRET);
 		editor.commit();
+		
 		
 		timelineHelper = new TwitDataHelper(this);
 		timelineHelper.removeAll();

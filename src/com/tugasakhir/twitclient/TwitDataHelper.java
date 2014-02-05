@@ -253,7 +253,8 @@ import android.util.Log;
 		db.delete("following", null, null);
 		db.delete("groups", null, null);
 		db.delete("group_users", null, null);
-		
+		db.delete("mute_users", null, null);
+		db.delete("schedule_tweet", null, null);
 		
 		db.close();
 	}
