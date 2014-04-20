@@ -53,6 +53,7 @@
 	 	<activity android:name=".MuteActivity" android:screenOrientation="portrait"></activity>
 	 	<activity android:name=".MuteForm" android:screenOrientation="portrait"></activity>
 	 	<activity android:name=".SearchActivity" android:screenOrientation="portrait"></activity>
+	 	<activity android:name=".ScheduleActivity" android:screenOrientation="portrait"></activity>
 	 	
 		<service android:name=".TimelineService" /> 
 		

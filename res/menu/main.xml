@@ -16,7 +16,10 @@
     
     <item android:id="@+id/logout"
         android:title="@string/menu_logout"/>
-
+    
+    <item android:id="@+id/schedule_tweet"
+        android:title="List Schedule Tweet"/>   
+        
     <item android:id="@+id/friend_refresh"
         android:title="Refresh list of friends"/>    
     

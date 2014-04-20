@@ -224,17 +224,13 @@ public class Main extends TabActivity implements OnClickListener {
 	        	Toast.makeText(this, "Groups", Toast.LENGTH_LONG).show();	      
 	        return true;
 	        
-	        case R.id.mute:	        	
-	        	
-	        	startActivity(new Intent(this, MuteActivity.class));
-	        	
+	        case R.id.mute:	        		        	
+	        	startActivity(new Intent(this, MuteActivity.class));	        	
 	        return true;
 	        
 	        
-	        case R.id.search:	        	
-	        	
-	        	startActivity(new Intent(this, SearchActivity.class));
-	        	
+	        case R.id.search:	        		        	
+	        	startActivity(new Intent(this, SearchActivity.class));	        	
 	        return true;	        
 	        
 	        case R.id.logout:
@@ -261,6 +257,10 @@ public class Main extends TabActivity implements OnClickListener {
 	        	
 	        	Toast.makeText(this, "Refreshed", Toast.LENGTH_LONG).show();	
 	        return true;
+	        
+	        case R.id.schedule_tweet:	        		        	
+	        	startActivity(new Intent(this, ScheduleActivity.class));	        	
+	        return true;	        
 	        
 	        case R.id.friend_refresh:
 	        	startActivity(new Intent(this, FriendRrefresh.class));

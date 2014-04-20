@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/list_selector"
+    android:padding="5dip">	
+	     
+	 <Button
+	     android:id="@+id/delete"
+	     style="?android:attr/buttonStyleSmall"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignParentRight="true"
+	     android:layout_centerVertical="true"
+	     android:text="Delete" />
+
+	 <TextView
+	     android:id="@+id/time"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignLeft="@+id/text_tweet"
+	     android:layout_alignParentTop="true"
+	     android:text="time"
+	     android:textColor="#040404"
+	     android:textSize="11dip"
+	     android:typeface="sans" />
+
+	 <TextView
+	     android:id="@+id/text_tweet"
+	     android:layout_width="wrap_content"
+	     android:layout_height="wrap_content"
+	     android:layout_alignBottom="@+id/delete"
+	     android:layout_alignParentLeft="true"
+	     android:text="tweet"
+	     android:textColor="#040404"
+	     android:textSize="15dip"
+	     android:textStyle="bold"
+	     android:typeface="sans" />
+
+</RelativeLayout>

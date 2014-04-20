@@ -31,6 +31,7 @@ public class TweetModel {
 		return id;
 	}
 	
+	//get all schedule
 	public Cursor getAll(){
 		return (db.query("schedule_tweet", null, null, null, null, null, "update_time ASC"));
 	}
@@ -38,4 +39,9 @@ public class TweetModel {
 	public void deleteByTime(long time){
 		db.delete("schedule_tweet", "update_time = "+time, null);
 	}
+	
+	public void delete(long id){
+		db.delete("schedule_tweet", "_id = "+id, null);
+	}	
+	
 }
